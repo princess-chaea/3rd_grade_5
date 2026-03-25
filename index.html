@@ -103,38 +103,90 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .start-btn:hover {
-            transform: scale(1.1);
-            filter: brightness(1.1);
+        /* Desktop Icons */
+        .desktop-icons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 100px);
+            grid-auto-rows: 100px;
+            gap: 20px;
+            padding: 20px;
+            height: 100%;
+            pointer-events: none; /* Let clicks pass to desktop but catch on icons */
         }
 
-        .taskbar-item {
-            width: 44px;
-            height: 44px;
-            background: transparent;
-            border-radius: 8px;
+        .desktop-icon {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #333;
+            gap: 4px;
+            padding: 10px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s;
-            position: relative;
+            pointer-events: auto;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
 
-        .taskbar-item:hover {
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .desktop-icon i {
+            width: 48px;
+            height: 48px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+        }
+
+        .desktop-icon span {
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* Context Menu - Win11 Style */
+        #context-menu {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 200px;
+            padding: 8px;
+            display: none;
+            flex-direction: column;
+            z-index: 50000;
+            animation: fadeIn 0.15s ease-out;
+        }
+
+        .menu-item {
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #333;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover {
             background: rgba(0, 0, 0, 0.05);
         }
 
-        .taskbar-item::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            width: 4px;
-            height: 4px;
-            background: var(--sponge-brown);
-            border-radius: 50%;
-            opacity: 0.6;
+        .menu-item i {
+            width: 16px;
+            height: 16px;
+            color: #666;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: rgba(0, 0, 0, 0.1);
+            margin: 4px 0;
         }
 
         /* Window System - Win11 Style */
@@ -183,12 +235,25 @@
             gap: 8px;
         }
 
-        .control-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid var(--sponge-brown);
+        .control-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background 0.2s, color 0.1s;
+            color: #666;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .control-btn.close:hover {
+            background: #e81123;
+            color: white;
         }
 
         .window-body {
@@ -505,6 +570,21 @@
 
     <!-- Desktop Area -->
     <div id="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icons-container">
+            <div class="desktop-icon" ondblclick="openWindow('win-paint')">
+                <i data-lucide="palette" class="text-yellow-400"></i>
+                <span>징징이의 화실</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('win-notepad')">
+                <i data-lucide="file-text" class="text-emerald-400"></i>
+                <span>비법 문서</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('win-explorer')">
+                <i data-lucide="folder" class="text-blue-400"></i>
+                <span>집게리아 금고</span>
+            </div>
+        </div>
         <!-- Icons -->
         <div class="flex flex-col gap-6">
             <div class="desktop-icon" onclick="openWindow('win-paint')">
@@ -531,7 +611,9 @@
             <div class="window-header" onmousedown="dragWindow(event, 'win-paint')">
                 <div class="window-title"><i data-lucide="palette" class="w-4 h-4"></i> 징징이의 화실 (Paint)</div>
                 <div class="window-controls">
-                    <div class="control-dot bg-gary-green" onclick="closeWindow('win-paint')"></div>
+                    <div class="control-btn close" onclick="closeWindow('win-paint')">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </div>
                 </div>
             </div>
             <div class="window-body">
@@ -551,7 +633,9 @@
             <div class="window-header" onmousedown="dragWindow(event, 'win-notepad')">
                 <div class="window-title"><i data-lucide="file-text" class="w-4 h-4"></i> 비법 문서 (Notepad)</div>
                 <div class="window-controls">
-                    <div class="control-dot bg-gary-green" onclick="closeWindow('win-notepad')"></div>
+                    <div class="control-btn close" onclick="closeWindow('win-notepad')">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </div>
                 </div>
             </div>
             <div class="window-body flex flex-col">
@@ -571,7 +655,9 @@
             <div class="window-header" onmousedown="dragWindow(event, 'win-explorer')">
                 <div class="window-title"><i data-lucide="folder" class="w-4 h-4"></i> 집게리아 금고 (Explorer)</div>
                 <div class="window-controls">
-                    <div class="control-dot bg-gary-green" onclick="closeWindow('win-explorer')"></div>
+                    <div class="control-btn close" onclick="closeWindow('win-explorer')">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </div>
                 </div>
             </div>
             <div class="window-body">
@@ -596,7 +682,9 @@
             <div class="window-header" onmousedown="dragWindow(event, 'win-browser')">
                 <div class="window-title"><i data-lucide="globe" class="w-4 h-4"></i> 비키니 시티 포털 (Browser)</div>
                 <div class="window-controls">
-                    <div class="control-dot bg-gary-green" onclick="closeWindow('win-browser')"></div>
+                    <div class="control-btn close" onclick="closeWindow('win-browser')">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </div>
                 </div>
             </div>
             <div class="window-body bg-slate-100 p-0 overflow-hidden flex flex-col">
@@ -663,6 +751,21 @@
         </button>
     </div>
 
+    <!-- Context Menu Area -->
+    <div id="context-menu">
+        <div class="menu-item" onclick="handleMenuAction('open')">
+            <i data-lucide="external-link"></i> 열기
+        </div>
+        <div class="menu-divider"></div>
+        <div class="menu-item text-blue-600 font-bold" onclick="handleMenuAction('zip')">
+            <i data-lucide="archive" class="text-blue-600"></i> ZIP으로 압축하기
+        </div>
+        <div class="menu-divider"></div>
+        <div class="menu-item text-red-600" onclick="handleMenuAction('delete')">
+            <i data-lucide="trash-2" class="text-red-600"></i> 삭제
+        </div>
+    </div>
+
     <!-- Custom Modal Area -->
     <div id="custom-modal">
         <div class="modal-card">
@@ -676,6 +779,21 @@
 
     <script>
         // --- DATA & STATE ---
+        const CHARACTERS = [
+            "spngebob.png", "Patrick Star.png", "Gary the Snail.png", "Barnacle Boy.png",
+            "Squidward Tentacles.png", "Squilliam Fancyson.png", "Mr. Krabs.png", "Pearl Krabs.png",
+            "Sandy Cheeks.png", "Bubble Bass.png", "Sheldon J. Plankton.png", "Karen Plankton.png",
+            "Larry the Lobster.png", "Flying Dutchman.png", "King Neptune.png", "Mrs. Puff.png", "all.png"
+        ];
+
+        function preloadImages() {
+            console.log("Preloading characters...");
+            CHARACTERS.forEach(char => {
+                const img = new Image();
+                img.src = `images/${char}`;
+            });
+        }
+
         const DIALOGUES = [
             // Phase 0: Intro
             { phase: 0, char: "spngebob.png", name: "스폰지밥", text: "태평양 저 멀리 비키니 시티에 온 걸 환영해! 뚱이랑 나는 오늘 대단한 걸 발견했어!" },
@@ -690,7 +808,8 @@
             { phase: 1, char: "Pearl Krabs.png", name: "진주", text: "'비법 문서(Notepad)'에 비법을 적고 텍스트 파일(.txt)로 저장해야 한다구!", requires: "save_text" },
 
             // Phase 2: Scientist & Exploration
-            { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "이봐들! 파일 이름 뒤에 붙는 .png, .txt 같은 걸 '확장자'라고 해. 파일의 성격을 알려주지!" },
+            { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "이봐들! 파일 이름 뒤에 붙는 .png, .txt 같은 걸 '확장자'라고 해. 이건 파일의 '종류'를 알려주는 성격표 같은 거지!" },
+            { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "예를 들어 .png는 그림🎨, .txt는 문서📝, .zip은 보따리 처럼 꽉 묶은 압축파일📦이야! 그 외에도 .mp4는 동영상🎬, .xlsx는 엑셀 데이터📊, .pptx는 발표 자료 슬라이드💻를 뜻해! 종류에 따라 열 수 있는 앱이 다르니 꼭 기억해!" },
             { phase: 2, char: "Bubble Bass.png", name: "버블 배스", text: "흥, 내 햄버거 주문서(.xlsx)나 운동 영상(.mp4)도 확장자가 다 다르지. 똑똑히 구분해야 할걸?" },
 
             // Phase 3: The Heist & Security
@@ -725,7 +844,12 @@
                 send_email: false
             },
             zipCreated: false,
-            missionComplete: false
+            missionComplete: false,
+            userData: {
+                id: '',
+                pw: '',
+                recoveryAnswer: ''
+            }
         };
 
         // --- CORE ENGINE ---
@@ -735,6 +859,7 @@
             updateExplorer();
             initPaint();
             startTime();
+            preloadImages();
         };
 
         // --- CUSTOM MODAL SYSTEM ---
@@ -833,6 +958,42 @@
             s.style.fontSize = (Math.random() * 20 + 20) + 'px';
             victory.appendChild(s);
             setTimeout(() => s.remove(), 2000);
+        }
+
+        // --- CONTEXT MENU LOGIC ---
+        let contextTarget = null;
+        document.addEventListener('contextmenu', e => {
+            const item = e.target.closest('.explorer-item, .desktop-icon');
+            if (item) {
+                e.preventDefault();
+                contextTarget = item;
+                const menu = document.getElementById('context-menu');
+                menu.style.display = 'flex';
+                menu.style.left = e.clientX + 'px';
+                menu.style.top = e.clientY + 'px';
+            } else {
+                document.getElementById('context-menu').style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('context-menu').style.display = 'none';
+        });
+
+        function handleMenuAction(action) {
+            if (!contextTarget) return;
+            const fileName = contextTarget.getAttribute('data-name');
+            
+            if (action === 'open') {
+                openFile(fileName);
+            } else if (action === 'zip') {
+                simZipInExplorer(); // Now triggered via context menu
+            } else if (action === 'delete') {
+                state.files = state.files.filter(f => f.name !== fileName);
+                updateExplorer();
+                showCustomModal(`${fileName} 삭제 완료!`);
+            }
+            contextTarget = null;
         }
 
         // --- WINDOW MANAGEMENT ---
@@ -966,7 +1127,12 @@
 
             state.files.forEach(file => {
                 const div = document.createElement('div');
-                div.className = 'flex flex-col items-center gap-2 cursor-pointer hover:bg-black/5 p-4 rounded-xl transition-all hover:scale-105';
+                div.className = 'explorer-item flex flex-col items-center gap-2 cursor-pointer hover:bg-black/5 p-4 rounded-xl transition-all hover:scale-105';
+                div.setAttribute('data-name', file.name);
+                div.setAttribute('data-type', file.type);
+                
+                div.ondblclick = () => openFile(file.name);
+                
                 div.innerHTML = `
                     <div class="w-16 h-16 bg-white/50 backdrop-blur-sm rounded-lg flex items-center justify-center shadow-sm border border-white/20">
                         <i data-lucide="${file.icon}" class="w-10 h-10 ${file.type === 'zip' ? 'text-yellow-500' : 'text-blue-400'}"></i>
@@ -976,6 +1142,22 @@
                 list.appendChild(div);
             });
             lucide.createIcons();
+        }
+
+        function openFile(name) {
+            const file = state.files.find(f => f.name === name);
+            if (!file) return;
+
+            if (file.type === 'image') {
+                openWindow('win-paint');
+                showCustomModal(`${name} 파일을 그림판에서 열었습니다!`);
+            } else if (file.type === 'text') {
+                openWindow('win-notepad');
+                document.getElementById('notepad-filename').value = name.replace('.txt', '');
+                showCustomModal(`${name} 파일을 메모장에서 열었습니다!`);
+            } else if (file.type === 'zip') {
+                showCustomModal(`${name} 파일은 압축되어 있어 내용을 보려면 압축을 풀어야 해! (교실에서는 여기까지!)`, "압축 파일");
+            }
         }
 
         function simZipInExplorer() {
@@ -1001,25 +1183,155 @@
         function renderSignup() {
             const content = document.getElementById('browser-content');
             content.innerHTML = `
-                <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-bold mb-4 text-center">넵튠 포털 회원가입</h2>
-                    <input type="text" id="b-id" placeholder="아이디" class="w-full border p-2 mb-2 rounded">
-                    <input type="password" id="b-pw" placeholder="비밀번호" class="w-full border p-2 mb-4 rounded">
-                    <label class="flex items-center gap-2 text-sm mb-4">
-                        <input type="checkbox" id="b-terms"> [필수] 비키니 시티 정보보호 약관에 동의합니다.
-                    </label>
-                    <button onclick="doSignup()" class="w-full bg-blue-500 text-white py-2 rounded font-bold">가입하기</button>
+                <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-xl border-4 border-indigo-100">
+                    <h2 class="text-3xl font-black mb-6 text-center text-indigo-600 kids-font">비키니 포털 통합 회원가입</h2>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-500 mb-1">아이디 (필수)</label>
+                            <input type="text" id="b-id" placeholder="8~12자 영문/숫자" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none transition-colors">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-500 mb-1">비밀번호 (필수)</label>
+                                <input type="password" id="b-pw" placeholder="••••••••" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none text-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-500 mb-1">비밀번호 확인</label>
+                                <input type="password" id="b-pw-confirm" placeholder="••••••••" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none text-xl">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-500 mb-1">이름 (필수)</label>
+                            <input type="text" id="b-name" placeholder="실명을 입력하세요" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-500 mb-1">비밀번호 찾기 질문</label>
+                                <div class="w-full bg-slate-50 p-3 rounded-2xl border-2 text-sm font-bold text-slate-600">친구들을 만나면 인사하는 말은?</div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-500 mb-1">정답 입력 (필수)</label>
+                                <input type="text" id="b-recovery" placeholder="'안녕'을 입력하세요" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="col-span-2">
+                                <label class="block text-sm font-bold text-slate-500 mb-1">생년월일 (필수)</label>
+                                <input type="date" id="b-birth" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-500 mb-1">성별 (선택)</label>
+                                <select id="b-gender" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none bg-white">
+                                    <option value="">선택안함</option>
+                                    <option value="male">남성</option>
+                                    <option value="female">여성</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-500 mb-1">휴대전화 번호 (필수 본인인증)</label>
+                            <div class="flex gap-2">
+                                <input type="tel" id="b-phone" placeholder="010-0000-0000" class="flex-1 border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none">
+                                <button onclick="requestAuthCode()" class="bg-indigo-100 text-indigo-700 px-4 rounded-2xl font-bold hover:bg-indigo-200 transition-colors">인증요청</button>
+                            </div>
+                        </div>
+                        <div id="auth-code-area" class="hidden">
+                            <label class="block text-sm font-bold text-slate-500 mb-1">인증번호 입력</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="b-auth-code" placeholder="4자리 숫자" class="flex-1 border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none">
+                                <button onclick="verifyAuthCode()" class="bg-emerald-100 text-emerald-700 px-4 rounded-2xl font-bold hover:bg-emerald-200 transition-colors">인증확인</button>
+                            </div>
+                            <p id="auth-status" class="text-xs mt-1 text-slate-400 font-medium">인증번호를 입력해주세요.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 mb-8 space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" id="b-terms" class="w-5 h-5 accent-indigo-600">
+                            <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">[필수] 이용약관 및 개인정보 수집 이용 동의</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" id="b-security" class="w-5 h-5 accent-indigo-600">
+                            <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">[필수] 비키니 로봇 방지 및 보안 정책 동의</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" id="b-marketing" class="w-5 h-5 accent-indigo-600">
+                            <span class="font-medium text-slate-500 group-hover:text-indigo-400 transition-colors text-sm">[선택] 이벤트 알림 및 마케팅 정보 수신 동의</span>
+                        </label>
+                    </div>
+
+                    <button onclick="doSignup()" class="w-full bg-indigo-600 text-white py-5 rounded-3xl font-black text-2xl shadow-xl hover:bg-indigo-700 hover:-translate-y-1 transition-all">
+                        비키니 시티 포털 가입하기
+                    </button>
+                    
+                    <p class="text-xs text-center mt-6 text-slate-400 font-medium">※ 실제로 데이터로 저장하지 않습니다. (교육용 시뮬레이션)</p>
                 </div>
             `;
         }
 
+        let generatedCode = null;
+        let isPhoneVerified = false;
+
+        function requestAuthCode() {
+            const phone = document.getElementById('b-phone').value;
+            if (!phone || phone.length < 10) return showCustomModal("올바른 휴대전화 번호를 입력해줘!", "인증 요청");
+            
+            generatedCode = Math.floor(1000 + Math.random() * 9000).toString();
+            showCustomModal(`[비키니시티] 인증번호는 [${generatedCode}] 입니다.`, "가상 SMS 도착");
+            
+            document.getElementById('auth-code-area').style.display = 'block';
+            document.getElementById('auth-status').innerText = "인증번호가 발송되었습니다.";
+            document.getElementById('auth-status').className = "text-xs mt-1 text-indigo-500 font-bold";
+        }
+
+        function verifyAuthCode() {
+            const input = document.getElementById('b-auth-code').value;
+            if (input === generatedCode) {
+                isPhoneVerified = true;
+                document.getElementById('auth-status').innerText = "본인인증이 완료되었습니다. ✅";
+                document.getElementById('auth-status').className = "text-xs mt-1 text-emerald-500 font-bold";
+                document.getElementById('b-auth-code').disabled = true;
+                document.getElementById('b-phone').disabled = true;
+            } else {
+                showCustomModal("인증번호가 일치하지 않아! 다시 확인해줄래?", "인증 실패");
+            }
+        }
+
+        function checkPasswordStrength(pw) {
+            const hasNumber = /\d/.test(pw);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pw);
+            const isLongEnough = pw.length >= 8;
+            return hasNumber && hasSpecial && isLongEnough;
+        }
+
         function doSignup() {
-            const terms = document.getElementById('b-terms').checked;
             const id = document.getElementById('b-id').value;
-            if (!id) return showCustomModal("아이디를 입력해줘!");
-            if (!terms) return showCustomModal("약관에 동의해야 보물 지도를 보낼 수 있어!");
+            const pw = document.getElementById('b-pw').value;
+            const pwConfirm = document.getElementById('b-pw-confirm').value;
+            const name = document.getElementById('b-name').value;
+            const birth = document.getElementById('b-birth').value;
+            const terms = document.getElementById('b-terms').checked;
+            const security = document.getElementById('b-security').checked;
+
+            if (!id || id.length < 4) return showCustomModal("아이디를 4자 이상 입력해줘!", "입력 확인");
+            
+            if (!checkPasswordStrength(pw)) {
+                return showCustomModal("비밀번호 보안 단계가 낮아!\n- 8자리 이상\n- 숫자 포함\n- 특수문자 포함\n이 세 가지를 모두 지켜줘!", "보안 위험");
+            }
+            if (pw !== pwConfirm) return showCustomModal("비밀번호 확인이 일치하지 않아!", "보안 확인");
+            
+            if (!isPhoneVerified) return showCustomModal("휴대폰 본인인증을 먼저 완료해줘!", "인증 확인");
+            
+            const recovery = document.getElementById('b-recovery').value;
+            if (recovery !== "안녕") return showCustomModal("비밀번호 찾기 정답에 '안녕'을 입력해줘야 해!", "입력 확인");
+
+            state.userData.id = id;
+            state.userData.pw = pw;
+            state.userData.recoveryAnswer = recovery;
+
             state.actions.signup_complete = true;
-            showCustomModal("회원가입 성공! 이제 로그인해서 메일을 보내자.");
+            showCustomModal(`${name}님, 본인인증 및 회원가입이 완료되었습니다! 이제 로그인해볼까요?`, "가입 완료!");
             renderLogin();
         }
 
@@ -1028,20 +1340,77 @@
             content.innerHTML = `
                 <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md border-4 border-slate-900">
                     <h2 class="text-2xl font-black mb-4 text-center">비키니 포털 로그인</h2>
-                    <input type="text" id="l-id" placeholder="아이디" class="w-full border-2 p-3 mb-2 rounded-xl">
+                    <input type="text" id="l-id" placeholder="아이디" class="w-full border-2 p-3 mb-2 rounded-xl" value="${state.userData.id}">
                     <input type="password" id="l-pw" placeholder="비밀번호" class="w-full border-2 p-3 mb-4 rounded-xl">
-                    <button onclick="doLogin()" class="w-full bg-emerald-500 text-white py-3 rounded-xl font-black text-lg shadow-md">로그인하기</button>
-                    <p class="text-xs text-center mt-4 text-slate-400">비밀번호를 잊으셨나요? 뚱이에게 물어보세요.</p>
+                    <button onclick="doLogin()" class="w-full bg-emerald-500 text-white py-3 rounded-xl font-black text-lg shadow-md mb-4">로그인하기</button>
+                    <div class="text-center">
+                        <button onclick="renderRecovery()" class="text-sm text-indigo-600 font-bold hover:underline">비밀번호를 잊으셨나요?</button>
+                    </div>
                 </div>
             `;
         }
 
         function doLogin() {
             const id = document.getElementById('l-id').value;
-            if (!id) return showCustomModal("아이디를 입력해!");
-            state.actions.login_complete = true;
-            showCustomModal("로그인 성공! 이제 국왕님께 이메일을 보내자.");
-            renderEmail();
+            const pw = document.getElementById('l-pw').value;
+            if (!id || !pw) return showCustomModal("아이디와 비밀번호를 모두 입력해!");
+            
+            if (id === state.userData.id && pw === state.userData.pw) {
+                state.actions.login_complete = true;
+                showCustomModal("로그인 성공! 이제 국왕님께 이메일을 보내자.");
+                renderEmail();
+            } else {
+                showCustomModal("아이디나 비밀번호가 틀렸어! 다시 확인해봐.", "로그인 실패");
+            }
+        }
+
+        function renderRecovery() {
+            const content = document.getElementById('browser-content');
+            content.innerHTML = `
+                <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md border-4 border-indigo-200">
+                    <h2 class="text-2xl font-black mb-4 text-center text-indigo-600">비밀번호 찾기</h2>
+                    <p class="text-sm font-bold text-slate-500 mb-2 text-center">보안 질문: 친구들을 만나면 인사하는 말은?</p>
+                    <input type="text" id="r-answer" placeholder="정답을 입력하세요" class="w-full border-2 p-3 mb-4 rounded-xl outline-none focus:border-indigo-400 text-center">
+                    <button onclick="doRecovery()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-black text-lg shadow-md mb-2">정답 확인</button>
+                    <button onclick="renderLogin()" class="w-full text-slate-400 text-sm font-bold py-2">돌아가기</button>
+                </div>
+            `;
+        }
+
+        function doRecovery() {
+            const ans = document.getElementById('r-answer').value;
+            if (ans === state.userData.recoveryAnswer) {
+                showCustomModal("정답입니다! 새로운 비밀번호를 설정해주세요.", "본인 확인 완료");
+                renderResetPassword();
+            } else {
+                showCustomModal("정답이 아니에요! 뚱이가 평소에 뭐라고 인사하는지 생각해봐.", "확인 실패");
+            }
+        }
+
+        function renderResetPassword() {
+            const content = document.getElementById('browser-content');
+            content.innerHTML = `
+                <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md border-4 border-emerald-200">
+                    <h2 class="text-2xl font-black mb-4 text-center text-emerald-600">비밀번호 재설정</h2>
+                    <input type="password" id="reset-pw" placeholder="새 비밀번호 (8자 이상+숫자+특수)" class="w-full border-2 p-3 mb-2 rounded-xl outline-none focus:border-emerald-400">
+                    <input type="password" id="reset-pw-confirm" placeholder="새 비밀번호 확인" class="w-full border-2 p-3 mb-4 rounded-xl outline-none focus:border-emerald-400">
+                    <button onclick="doResetPassword()" class="w-full bg-emerald-500 text-white py-3 rounded-xl font-black text-lg shadow-md mb-2">비밀번호 변경하기</button>
+                </div>
+            `;
+        }
+
+        function doResetPassword() {
+            const pw = document.getElementById('reset-pw').value;
+            const pwConfirm = document.getElementById('reset-pw-confirm').value;
+
+            if (!checkPasswordStrength(pw)) {
+                return showCustomModal("새 비밀번호가 보안 규칙에 맞지 않아!", "보안 위험");
+            }
+            if (pw !== pwConfirm) return showCustomModal("비밀번호 확인이 일치하지 않아!", "변경 실패");
+
+            state.userData.pw = pw;
+            showCustomModal("비밀번호가 성공적으로 변경되었습니다! 새로운 비밀번호로 로그인해주세요.", "변경 완료");
+            renderLogin();
         }
 
         function renderEmail() {
