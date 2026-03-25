@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>디지털 마스터: 20분 완성 미션</title>
+    <title>디지털 마스터: 파일&이메일 보내기</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -55,7 +55,7 @@
             max-width: 700px;
             width: 100%;
             padding: 40px;
-            box-shadow: 0 20px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 20px 0 rgba(0, 0, 0, 0.2);
             text-align: center;
         }
 
@@ -64,18 +64,21 @@
             flex: 1;
             position: relative;
             padding: 20px;
-            background-image: url('https://www.transparenttextures.com/patterns/sandpaper.png'); /* Subtle sand texture */
+            background-image: url('https://www.transparenttextures.com/patterns/sandpaper.png');
+            /* Subtle sand texture */
             overflow: hidden;
         }
 
         /* Taskbar - Win11 Style */
         #taskbar {
             height: 60px;
-            background: rgba(255, 255, 255, 0.7); /* Lighter, MICA-like */
+            background: rgba(255, 255, 255, 0.7);
+            /* Lighter, MICA-like */
             backdrop-filter: blur(20px);
             display: flex;
             align-items: center;
-            justify-content: center; /* Centered icons */
+            justify-content: center;
+            /* Centered icons */
             padding: 0 20px;
             gap: 8px;
             z-index: 9999;
@@ -97,7 +100,7 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .start-btn:hover {
@@ -138,7 +141,8 @@
         .window {
             position: absolute;
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(30px); /* Mica effect */
+            backdrop-filter: blur(30px);
+            /* Mica effect */
             border-radius: 12px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
             display: none;
@@ -265,14 +269,16 @@
             background: white;
             border: 4px solid var(--sponge-brown);
             border-radius: 20px;
-            padding: 30px; /* Increased padding */
+            padding: 30px;
+            /* Increased padding */
             position: relative;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             pointer-events: auto;
         }
 
         #char-text {
-            font-size: 1.5rem; /* Increased font size */
+            font-size: 1.5rem;
+            /* Increased font size */
             line-height: 1.4;
         }
 
@@ -342,8 +348,13 @@
 
         /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         /* Victory Screen */
@@ -369,7 +380,7 @@
             width: 90%;
             border-radius: 40px;
             border: 10px solid white;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
             margin-bottom: 30px;
             animation: bounceIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -381,15 +392,77 @@
         }
 
         @keyframes sparkleAnim {
-            0% { transform: scale(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0;
+            }
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
+        /* Custom Modal */
+        #custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 40000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-card {
+            background: white;
+            border: 6px solid var(--sponge-brown);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 0 rgba(0, 0, 0, 0.1);
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--deep-ocean);
+            margin-bottom: 20px;
+        }
+
+        .modal-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .modal-btn {
+            background: var(--sponge-yellow);
+            border: 3px solid var(--sponge-brown);
+            border-radius: 12px;
+            padding: 10px 30px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--sponge-brown);
+            transition: all 0.1s;
+        }
+
+        .modal-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--sponge-brown);
         }
 
         .fade-in {
@@ -403,7 +476,8 @@
     <!-- Intro Screen (Teacher's Guide) -->
     <div id="intro-screen">
         <div class="intro-card">
-            <h1 class="text-4xl font-black text-blue-600 mb-6 underline decoration-sponge-yellow decoration-8">비키니 시티 디지털 마스터 활동 안내</h1>
+            <h1 class="text-4xl font-black text-blue-600 mb-6 underline decoration-sponge-yellow decoration-8">비키니 시티
+                디지털 마스터 활동 안내</h1>
             <div class="grid grid-cols-2 gap-4 text-left mb-8">
                 <div class="bg-yellow-50 p-4 rounded-2xl border-2 border-yellow-200">
                     <h3 class="font-bold text-lg mb-2 text-yellow-700">🎨 활동 1: 파일 생성</h3>
@@ -422,7 +496,8 @@
                     <p class="text-sm text-slate-600">보안을 위해 계정을 생성하고 이메일로 파일을 전송합니다.</p>
                 </div>
             </div>
-            <button onclick="startMission()" class="bg-red-500 text-white text-2xl px-12 py-4 rounded-full font-black shadow-lg hover:scale-105 transition-transform">
+            <button onclick="startMission()"
+                class="bg-red-500 text-white text-2xl px-12 py-4 rounded-full font-black shadow-lg hover:scale-105 transition-transform">
                 수업 시작하기! (Bikini Bottom OS 접속)
             </button>
         </div>
@@ -463,8 +538,10 @@
                 <canvas id="canvas-paint"></canvas>
                 <div class="flex gap-2 mt-3">
                     <button onclick="clearCanvas()" class="bg-red-400 text-white px-3 py-1 rounded">지우기</button>
-                    <input type="text" id="paint-filename" placeholder="파일 이름" class="border p-1 flex-1 rounded" value="portrait">
-                    <button onclick="saveImage()" class="bg-blue-500 text-white px-4 py-1 rounded font-bold">저장 (.png)</button>
+                    <input type="text" id="paint-filename" placeholder="파일 이름" class="border p-1 flex-1 rounded"
+                        value="portrait">
+                    <button onclick="saveImage()" class="bg-blue-500 text-white px-4 py-1 rounded font-bold">저장
+                        (.png)</button>
                 </div>
             </div>
         </div>
@@ -478,10 +555,13 @@
                 </div>
             </div>
             <div class="window-body flex flex-col">
-                <textarea id="notepad-content" class="flex-1 border p-2 rounded resize-none mb-2" placeholder="비법을 적으시오..."></textarea>
+                <textarea id="notepad-content" class="flex-1 border p-2 rounded resize-none mb-2"
+                    placeholder="비법을 적으시오..."></textarea>
                 <div class="flex gap-2">
-                    <input type="text" id="notepad-filename" placeholder="파일 이름" class="border p-1 flex-1 rounded" value="formula">
-                    <button onclick="saveText()" class="bg-emerald-500 text-white px-4 py-1 rounded font-bold">저장 (.txt)</button>
+                    <input type="text" id="notepad-filename" placeholder="파일 이름" class="border p-1 flex-1 rounded"
+                        value="formula">
+                    <button onclick="saveText()" class="bg-emerald-500 text-white px-4 py-1 rounded font-bold">저장
+                        (.txt)</button>
                 </div>
             </div>
         </div>
@@ -501,7 +581,9 @@
                         <span class="cursor-pointer">바탕화면</span> >
                         <span class="font-bold text-slate-800" id="current-folder-path">금고</span>
                     </div>
-                    <button onclick="simZipInExplorer()" class="text-xs bg-yellow-400 text-brown-800 px-2 py-1 rounded font-bold border border-yellow-600 shadow-sm">압축하기 (ZIP)</button>
+                    <button onclick="simZipInExplorer()"
+                        class="text-xs bg-yellow-400 text-brown-800 px-2 py-1 rounded font-bold border border-yellow-600 shadow-sm">압축하기
+                        (ZIP)</button>
                 </div>
                 <div class="explorer-list" id="explorer-list">
                     <!-- Files will be injected here -->
@@ -542,8 +624,10 @@
         </div>
         <div class="dialogue-bubble">
             <p id="char-name" class="font-black text-red-500 text-sm uppercase mb-1">스폰지밥</p>
-            <p id="char-text" class="text-slate-800 font-bold leading-tight">안녕! 친구들! 비키니 시티에 온 걸 환영해! 우리와 함께 디지털 보물을 찾아보지 않을래?</p>
-            <button id="next-btn" class="next-btn" onclick="handleDialogue()">다음 <i data-lucide="chevron-right" class="inline w-4 h-4"></i></button>
+            <p id="char-text" class="text-slate-800 font-bold leading-tight">안녕! 친구들! 비키니 시티에 온 걸 환영해! 우리와 함께 디지털 보물을
+                찾아보지 않을래?</p>
+            <button id="next-btn" class="next-btn" onclick="handleDialogue()">다음 <i data-lucide="chevron-right"
+                    class="inline w-4 h-4"></i></button>
         </div>
     </div>
 
@@ -553,8 +637,10 @@
             <img src="images/spngebob.png" class="w-8 h-8 rounded-full" style="border: 2px solid var(--sponge-brown);">
         </div>
         <div class="taskbar-item" onclick="openWindow('win-paint')"><i data-lucide="palette" class="w-5 h-5"></i></div>
-        <div class="taskbar-item" onclick="openWindow('win-notepad')"><i data-lucide="file-text" class="w-5 h-5"></i></div>
-        <div class="taskbar-item" onclick="openWindow('win-explorer')"><i data-lucide="folder" class="w-5 h-5"></i></div>
+        <div class="taskbar-item" onclick="openWindow('win-notepad')"><i data-lucide="file-text" class="w-5 h-5"></i>
+        </div>
+        <div class="taskbar-item" onclick="openWindow('win-explorer')"><i data-lucide="folder" class="w-5 h-5"></i>
+        </div>
         <div class="taskbar-item" onclick="openWindow('win-browser')"><i data-lucide="globe" class="w-5 h-5"></i></div>
         <div class="flex-1"></div>
         <div class="text-white text-xs font-bold px-3 py-1 bg-black/30 rounded-lg">
@@ -571,12 +657,22 @@
             <h2 class="text-4xl font-black text-yellow-300 drop-shadow-md kids-font">당신은 이제 파일 관리의 신입니다!</h2>
             <p class="text-xl font-medium opacity-90">선생님께 이 화면을 보여드리고 도장을 받으세요!</p>
         </div>
-        <button onclick="location.reload()" class="mt-12 bg-white text-blue-600 px-10 py-4 rounded-full font-black text-2xl shadow-xl hover:scale-110 transition-transform">
+        <button onclick="location.reload()"
+            class="mt-12 bg-white text-blue-600 px-10 py-4 rounded-full font-black text-2xl shadow-xl hover:scale-110 transition-transform">
             다시 한 번 모험하기
         </button>
     </div>
 
-<!-- Finalized with SpongeBob Theme -->
+    <!-- Custom Modal Area -->
+    <div id="custom-modal">
+        <div class="modal-card">
+            <div id="modal-title" class="modal-title kids-font">알림</div>
+            <div id="modal-text" class="modal-text">메시지 내용입니다.</div>
+            <button onclick="closeCustomModal()" class="modal-btn kids-font">알겠어!</button>
+        </div>
+    </div>
+
+    <!-- Finalized with SpongeBob Theme -->
 
     <script>
         // --- DATA & STATE ---
@@ -586,26 +682,26 @@
             { phase: 0, char: "Patrick Star.png", name: "뚱이", text: "맞아! 근데 이게 뭔지 모르겠어. 'corrupted_map.dat'라고 써있는데... 먹는 건가?" },
             { phase: 0, char: "Gary the Snail.png", name: "핑핑이", text: "고양이~ (이건 망가진 데이터 파일이야! 수선이 필요해!)" },
             { phase: 0, char: "Barnacle Boy.png", name: "레오", text: "좋아, 얘들아! 우리가 이 디지털 보물 지도를 복구하려면 비키니 시티 친구들의 도움이 필요해!" },
-            
+
             // Phase 1: Creation
             { phase: 1, char: "Squidward Tentacles.png", name: "징징이", text: "내 화실에 온 걸 환영... 하진 않지만, 보물 지도를 고치려면 내 초상화가 필요해!" },
             { phase: 1, char: "Squilliam Fancyson.png", name: "심해의 왕자", text: "우선 '징징이의 화실(Paint)'을 열어 그림을 그리고 저장해봐!", requires: "save_image" },
             { phase: 1, char: "Mr. Krabs.png", name: "집게사장", text: "돈! 아니, 비법 소스도 잊지 말라고! 보물의 핵심은 기록이지!" },
             { phase: 1, char: "Pearl Krabs.png", name: "진주", text: "'비법 문서(Notepad)'에 비법을 적고 텍스트 파일(.txt)로 저장해야 한다구!", requires: "save_text" },
-            
+
             // Phase 2: Scientist & Exploration
             { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "이봐들! 파일 이름 뒤에 붙는 .png, .txt 같은 걸 '확장자'라고 해. 파일의 성격을 알려주지!" },
             { phase: 2, char: "Bubble Bass.png", name: "버블 배스", text: "흥, 내 햄버거 주문서(.xlsx)나 운동 영상(.mp4)도 확장자가 다 다르지. 똑똑히 구분해야 할걸?" },
-            
+
             // Phase 3: The Heist & Security
             { phase: 3, char: "Sheldon J. Plankton.png", name: "플랑크톤", text: "하하하! 그 파일들을 내가 다 가져가 주지! 비법 소스는 내 것이다!" },
             { phase: 3, char: "Karen Plankton.png", name: "캐런", text: "플랑크톤, 보안이 너무 허술해. 얘들아, '집게리아 금고(Explorer)'를 열어 파일들을 폴더에 숨겨!" },
-            
+
             // Phase 4: Optimization & Tribute
             { phase: 4, char: "Larry the Lobster.png", name: "래리", text: "파일이 너무 많아서 무거워! 근육처럼 꽉 압축해야겠어. ZIP 파일로 만들자!", requires: "zip_files" },
             { phase: 4, char: "Flying Dutchman.png", name: "레이잉 더치맨", text: "으하하하! 보물을 내게 보내라! 아니면 너희 영혼을 가져가겠다!" },
             { phase: 4, char: "King Neptune.png", name: "넵튠 왕", text: "정중하게 '포털 사이트(Browser)'에서 나에게 메일을 보내도록 하라. 허허허!", requires: "send_email" },
-            
+
             // Phase 5: Conclusion
             { phase: 5, char: "Mrs. Puff.png", name: "퐁퐁 부인", text: "완벽해요! 당신은 이제 비키니 시티의 진정한 디지털 마스터입니다! 수료증을 받으세요!" }
         ];
@@ -640,6 +736,18 @@
             initPaint();
             startTime();
         };
+
+        // --- CUSTOM MODAL SYSTEM ---
+        function showCustomModal(text, title = "알림") {
+            const modal = document.getElementById('custom-modal');
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = text;
+            modal.style.display = 'flex';
+        }
+
+        function closeCustomModal() {
+            document.getElementById('custom-modal').style.display = 'none';
+        }
 
         function startMission() {
             document.getElementById('intro-screen').style.display = 'none';
@@ -692,7 +800,7 @@
         function handleDialogue() {
             const d = DIALOGUES[state.dialogueIdx];
             if (d.requires && !state.actions[d.requires]) {
-                alert("미션을 먼저 완료해야 다음으로 넘어갈 수 있어!");
+                showCustomModal("미션을 먼저 완료해야 다음으로 넘어갈 수 있어!");
                 return;
             }
 
@@ -708,9 +816,9 @@
         function showVictory() {
             const victory = document.getElementById('victory-screen');
             victory.style.display = 'flex';
-            
+
             // Add sparkles
-            for(let i=0; i<30; i++) {
+            for (let i = 0; i < 30; i++) {
                 setTimeout(createSparkle, i * 100);
             }
         }
@@ -734,16 +842,21 @@
             win.style.display = 'flex';
             win.style.opacity = '0';
             win.style.transform = 'scale(0.9) translateY(10px)';
-            
+
             // Trigger reflow for animation
             void win.offsetWidth;
-            
+
             win.style.transition = 'all 0.3s cubic-bezier(0.1, 0.9, 0.2, 1)';
             win.style.opacity = '1';
             win.style.transform = 'scale(1) translateY(0)';
-            
+
             bringToFront(id);
             state.windows[id].active = true;
+
+            // Fix Paint Canvas Initialization
+            if (id === 'win-paint') {
+                setTimeout(initPaint, 100);
+            }
         }
 
         function closeWindow(id) {
@@ -793,14 +906,23 @@
         // --- PAINT APP ---
         function initPaint() {
             const canvas = document.getElementById('canvas-paint');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             let drawing = false;
 
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
+            // Ensure canvas size matches display size correctly
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width || canvas.offsetWidth;
+            canvas.height = rect.height || canvas.offsetHeight;
 
-            canvas.onmousedown = () => drawing = true;
-            canvas.onmouseup = () => { drawing = false; ctx.beginPath(); };
+            // Paint logic
+            canvas.onmousedown = (e) => {
+                drawing = true;
+                ctx.beginPath();
+                ctx.moveTo(e.offsetX, e.offsetY);
+            };
+            canvas.onmouseup = () => { drawing = false; };
+            canvas.onmouseleave = () => { drawing = false; };
             canvas.onmousemove = (e) => {
                 if (!drawing) return;
                 ctx.lineWidth = 5;
@@ -808,8 +930,6 @@
                 ctx.strokeStyle = '#0056b3';
                 ctx.lineTo(e.offsetX, e.offsetY);
                 ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(e.offsetX, e.offsetY);
             };
         }
 
@@ -823,20 +943,20 @@
             state.files.push({ name: name + ".png", type: 'image', icon: 'file-image' });
             state.actions.save_image = true; // Unlock dialogue
             updateExplorer();
-            updateDialogue(); 
-            alert("그림이 저장되었습니다! '집게리아 금고'에서 확인해보세요.");
+            updateDialogue();
+            showCustomModal("그림이 저장되었습니다! '집게리아 금고'에서 확인해보세요.");
         }
 
         // --- NOTEPAD APP ---
         function saveText() {
             const name = document.getElementById('notepad-filename').value || "unnamed";
             const content = document.getElementById('notepad-content').value;
-            if (!content) return alert("내용을 입력해주세요!");
+            if (!content) return showCustomModal("내용을 입력해주세요!");
             state.files.push({ name: name + ".txt", type: 'text', icon: 'file-text' });
             state.actions.save_text = true; // Unlock dialogue
             updateExplorer();
             updateDialogue();
-            alert("문서가 '집게리아 금고'에 저장되었습니다!");
+            showCustomModal("문서가 '집게리아 금고'에 저장되었습니다!");
         }
 
         // --- EXPLORER APP ---
@@ -859,18 +979,18 @@
         }
 
         function simZipInExplorer() {
-            if (state.files.length < 2) return alert("압축할 파일이 부족해요! 먼저 그림과 문서를 저장하세요.");
+            if (state.files.length < 2) return showCustomModal("압축할 파일이 부족해요! 먼저 그림과 문서를 저장하세요.");
             state.zipCreated = true;
             state.actions.zip_files = true; // Unlock dialogue
             state.files = [{ name: 'vault.zip', type: 'zip', icon: 'archive' }];
             updateExplorer();
             updateDialogue();
-            alert("정말로 꽉 압축했어! 이제 'vault.zip' 파일 하나만 남았네!");
+            showCustomModal("정말로 꽉 압축했어! 이제 'vault.zip' 파일 하나만 남았네!");
         }
 
         // --- BROWSER APP ---
         function toggleStartMenu() {
-            alert("비키니 시티 OS v1.0\n스폰지밥의 우정이 소스코드에 담겨있습니다!");
+            showCustomModal("비키니 시티 OS v1.0\n스폰지밥의 우정이 소스코드에 담겨있습니다!");
         }
 
         // Initialize Browser Content
@@ -896,10 +1016,10 @@
         function doSignup() {
             const terms = document.getElementById('b-terms').checked;
             const id = document.getElementById('b-id').value;
-            if (!id) return alert("아이디를 입력해줘!");
-            if (!terms) return alert("약관에 동의해야 보물 지도를 보낼 수 있어!");
+            if (!id) return showCustomModal("아이디를 입력해줘!");
+            if (!terms) return showCustomModal("약관에 동의해야 보물 지도를 보낼 수 있어!");
             state.actions.signup_complete = true;
-            alert("회원가입 성공! 이제 로그인해서 메일을 보내자.");
+            showCustomModal("회원가입 성공! 이제 로그인해서 메일을 보내자.");
             renderLogin();
         }
 
@@ -918,9 +1038,9 @@
 
         function doLogin() {
             const id = document.getElementById('l-id').value;
-            if (!id) return alert("아이디를 입력해!");
+            if (!id) return showCustomModal("아이디를 입력해!");
             state.actions.login_complete = true;
-            alert("로그인 성공! 이제 국왕님께 이메일을 보내자.");
+            showCustomModal("로그인 성공! 이제 국왕님께 이메일을 보내자.");
             renderEmail();
         }
 
@@ -948,16 +1068,16 @@
         }
 
         function attachZip() {
-            if (!state.zipCreated) return alert("먼저 파일을 압축해야 해!");
+            if (!state.zipCreated) return showCustomModal("먼저 파일을 압축해야 해!");
             document.getElementById('attach-status').innerText = "vault.zip 첨부됨";
             state.attachmentAttached = true;
         }
 
         function sendFinalEmail() {
-            if (!state.zipCreated) return alert("파일을 압축해서 준비해야지!");
-            if (!state.attachmentAttached) return alert("파일을 첨부해야지!");
+            if (!state.zipCreated) return showCustomModal("파일을 압축해서 준비해야지!");
+            if (!state.attachmentAttached) return showCustomModal("파일을 첨부해야지!");
             state.actions.send_email = true; // Unlock dialogue
-            alert("메일 발송 성공! 넵튠 국왕님께서 매우 기뻐하셔!");
+            showCustomModal("메일 발송 성공! 넵튠 국왕님께서 매우 기뻐하셔!", "미션 성공!");
             updateDialogue(); // Unlock final dialogue
         }
     </script>
