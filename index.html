@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디지털 마스터: 20분 완성 미션</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Pretendard:wght@400;600;700&display=swap');
+
+        :root {
+            --sponge-yellow: #FFF700;
+            --sponge-brown: #9E6B31;
+            --bikini-blue: #00D2FF;
+            --patrick-pink: #FF69B4;
+            --gary-green: #B2FF59;
+            --deep-ocean: #0056b3;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: linear-gradient(180deg, #00D2FF 0%, #3a7bd5 100%);
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kids-font {
+            font-family: 'Gaegu', cursive;
+        }
+
+        /* Desktop Area */
+        #desktop {
+            flex: 1;
+            position: relative;
+            padding: 20px;
+            background-image: url('https://www.transparenttextures.com/patterns/sandpaper.png'); /* Subtle sand texture */
+            overflow: hidden;
+        }
+
+        /* Taskbar */
+        #taskbar {
+            height: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 10px;
+            z-index: 9999;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .start-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--sponge-yellow);
+            border-radius: 12px;
+            border: 3px solid var(--sponge-brown);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 0 var(--sponge-brown);
+        }
+
+        .start-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--sponge-brown);
+        }
+
+        .taskbar-item {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .taskbar-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Window System */
+        .window {
+            position: absolute;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 4px solid var(--sponge-brown);
+            min-width: 300px;
+            min-height: 200px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+        }
+
+        .window.active {
+            display: flex;
+            z-index: 1000;
+        }
+
+        .window-header {
+            background: var(--sponge-yellow);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            border-bottom: 2px solid var(--sponge-brown);
+        }
+
+        .window-title {
+            font-weight: bold;
+            color: var(--sponge-brown);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--sponge-brown);
+            cursor: pointer;
+        }
+
+        .window-body {
+            flex: 1;
+            padding: 15px;
+            overflow: auto;
+            position: relative;
+        }
+
+        /* Desktop Icons */
+        .desktop-icon {
+            width: 80px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border-radius: 8px;
+            padding: 5px;
+            transition: background 0.2s;
+        }
+
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .desktop-icon i {
+            font-size: 2rem;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        .desktop-icon span {
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+            word-break: break-all;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Character Dialogue Overlay */
+        #dialogue-overlay {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        .char-box {
+            width: 150px;
+            flex-shrink: 0;
+            pointer-events: auto;
+        }
+
+        .char-img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+            transition: transform 0.3s;
+        }
+
+        .char-img:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .dialogue-bubble {
+            flex: 1;
+            background: white;
+            border: 4px solid var(--sponge-brown);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            pointer-events: auto;
+        }
+
+        .dialogue-bubble::after {
+            content: '';
+            position: absolute;
+            left: -15px;
+            bottom: 20px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 15px solid var(--sponge-brown);
+        }
+
+        .next-btn {
+            background: var(--bikini-blue);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--deep-ocean);
+            box-shadow: 0 4px 0 var(--deep-ocean);
+            transition: all 0.2s;
+            float: right;
+            margin-top: 10px;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--deep-ocean);
+        }
+
+        /* App Specific Styles */
+        #canvas-paint {
+            background: white;
+            border: 2px solid #ccc;
+            cursor: crosshair;
+            width: 100%;
+            height: 300px;
+        }
+
+        .explorer-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 15px;
+        }
+
+        #browser-frame {
+            background: #f0f0f0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+    </style>
+</head>
+
+<body class="kids-font">
+
+    <!-- Desktop Area -->
+    <div id="desktop">
+        <!-- Icons -->
+        <div class="flex flex-col gap-6">
+            <div class="desktop-icon" onclick="openWindow('win-paint')">
+                <i data-lucide="palette"></i>
+                <span>징징이의 화실</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('win-notepad')">
+                <i data-lucide="file-text"></i>
+                <span>비법 문서</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('win-explorer')">
+                <i data-lucide="folder"></i>
+                <span>집게리아 금고</span>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('win-browser')">
+                <i data-lucide="globe"></i>
+                <span>포털 사이트</span>
+            </div>
+        </div>
+
+        <!-- Windows -->
+        <!-- Paint -->
+        <div id="win-paint" class="window" style="width: 500px; height: 450px; top: 50px; left: 150px;">
+            <div class="window-header" onmousedown="dragWindow(event, 'win-paint')">
+                <div class="window-title"><i data-lucide="palette" class="w-4 h-4"></i> 징징이의 화실 (Paint)</div>
+                <div class="window-controls">
+                    <div class="control-dot bg-gary-green" onclick="closeWindow('win-paint')"></div>
+                </div>
+            </div>
+            <div class="window-body">
+                <canvas id="canvas-paint"></canvas>
+                <div class="flex gap-2 mt-3">
+                    <button onclick="clearCanvas()" class="bg-red-400 text-white px-3 py-1 rounded">지우기</button>
+                    <input type="text" id="paint-filename" placeholder="파일 이름" class="border p-1 flex-1 rounded" value="portrait">
+                    <button onclick="saveImage()" class="bg-blue-500 text-white px-4 py-1 rounded font-bold">저장 (.png)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notepad -->
+        <div id="win-notepad" class="window" style="width: 400px; height: 350px; top: 100px; left: 200px;">
+            <div class="window-header" onmousedown="dragWindow(event, 'win-notepad')">
+                <div class="window-title"><i data-lucide="file-text" class="w-4 h-4"></i> 비법 문서 (Notepad)</div>
+                <div class="window-controls">
+                    <div class="control-dot bg-gary-green" onclick="closeWindow('win-notepad')"></div>
+                </div>
+            </div>
+            <div class="window-body flex flex-col">
+                <textarea id="notepad-content" class="flex-1 border p-2 rounded resize-none mb-2" placeholder="비법을 적으시오..."></textarea>
+                <div class="flex gap-2">
+                    <input type="text" id="notepad-filename" placeholder="파일 이름" class="border p-1 flex-1 rounded" value="formula">
+                    <button onclick="saveText()" class="bg-emerald-500 text-white px-4 py-1 rounded font-bold">저장 (.txt)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explorer -->
+        <div id="win-explorer" class="window" style="width: 600px; height: 400px; top: 150px; left: 300px;">
+            <div class="window-header" onmousedown="dragWindow(event, 'win-explorer')">
+                <div class="window-title"><i data-lucide="folder" class="w-4 h-4"></i> 집게리아 금고 (Explorer)</div>
+                <div class="window-controls">
+                    <div class="control-dot bg-gary-green" onclick="closeWindow('win-explorer')"></div>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="flex justify-between mb-4 border-b pb-2">
+                    <div class="flex gap-2 text-sm text-slate-500">
+                        <span class="cursor-pointer font-bold text-blue-600">내 컴퓨터</span> >
+                        <span class="cursor-pointer">바탕화면</span> >
+                        <span class="font-bold text-slate-800" id="current-folder-path">금고</span>
+                    </div>
+                    <button onclick="simZipInExplorer()" class="text-xs bg-yellow-400 text-brown-800 px-2 py-1 rounded font-bold border border-yellow-600 shadow-sm">압축하기 (ZIP)</button>
+                </div>
+                <div class="explorer-list" id="explorer-list">
+                    <!-- Files will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Browser -->
+        <div id="win-browser" class="window" style="width: 700px; height: 500px; top: 80px; left: 250px;">
+            <div class="window-header" onmousedown="dragWindow(event, 'win-browser')">
+                <div class="window-title"><i data-lucide="globe" class="w-4 h-4"></i> 비키니 시티 포털 (Browser)</div>
+                <div class="window-controls">
+                    <div class="control-dot bg-gary-green" onclick="closeWindow('win-browser')"></div>
+                </div>
+            </div>
+            <div class="window-body bg-slate-100 p-0 overflow-hidden flex flex-col">
+                <div class="bg-white border-b p-2 flex items-center gap-2">
+                    <div class="flex gap-1">
+                        <i data-lucide="arrow-left" class="w-4 h-4 text-slate-400"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400"></i>
+                        <i data-lucide="refresh-cw" class="w-4 h-4 text-slate-400"></i>
+                    </div>
+                    <div class="bg-slate-100 rounded-full px-4 py-1 text-xs text-slate-600 flex-1 truncate">
+                        https://www.bikini-bottom.mail/signup
+                    </div>
+                </div>
+                <div class="flex-1 p-6 overflow-auto" id="browser-content">
+                    <!-- Browser content (Signup or Email) injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialogue System -->
+    <div id="dialogue-overlay">
+        <div class="char-box">
+            <img id="char-img" src="images/spngebob.png" class="char-img" alt="Character">
+        </div>
+        <div class="dialogue-bubble">
+            <p id="char-name" class="font-black text-red-500 text-sm uppercase mb-1">스폰지밥</p>
+            <p id="char-text" class="text-slate-800 font-bold leading-tight">안녕! 친구들! 비키니 시티에 온 걸 환영해! 우리와 함께 디지털 보물을 찾아보지 않을래?</p>
+            <button id="next-btn" class="next-btn" onclick="handleDialogue()">다음 <i data-lucide="chevron-right" class="inline w-4 h-4"></i></button>
+        </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div id="taskbar">
+        <div class="start-btn" onclick="toggleStartMenu()">
+            <img src="images/spngebob.png" class="w-8 h-8 rounded-full" style="border: 2px solid var(--sponge-brown);">
+        </div>
+        <div class="taskbar-item" onclick="openWindow('win-paint')"><i data-lucide="palette" class="w-5 h-5"></i></div>
+        <div class="taskbar-item" onclick="openWindow('win-notepad')"><i data-lucide="file-text" class="w-5 h-5"></i></div>
+        <div class="taskbar-item" onclick="openWindow('win-explorer')"><i data-lucide="folder" class="w-5 h-5"></i></div>
+        <div class="taskbar-item" onclick="openWindow('win-browser')"><i data-lucide="globe" class="w-5 h-5"></i></div>
+        <div class="flex-1"></div>
+        <div class="text-white text-xs font-bold px-3 py-1 bg-black/30 rounded-lg">
+            <span id="system-clock">12:00 PM</span>
+        </div>
+    </div>
+
+<!-- Finalized with SpongeBob Theme -->
+
+    <script>
+        // --- DATA & STATE ---
+        const DIALOGUES = [
+            // Phase 0: Intro
+            { phase: 0, char: "spngebob.png", name: "스폰지밥", text: "태평양 저 멀리 비키니 시티에 온 걸 환영해! 뚱이랑 나는 오늘 대단한 걸 발견했어!" },
+            { phase: 0, char: "Patrick Star.png", name: "뚱이", text: "맞아! 근데 이게 뭔지 모르겠어. 'corrupted_map.dat'라고 써있는데... 먹는 건가?" },
+            { phase: 0, char: "Gary the Snail.png", name: "핑핑이", text: "고양이~ (이건 망가진 데이터 파일이야! 수선이 필요해!)" },
+            { phase: 0, char: "Barnacle Boy.png", name: "레오", text: "좋아, 얘들아! 우리가 이 디지털 보물 지도를 복구하려면 비키니 시티 친구들의 도움이 필요해!" },
+            
+            // Phase 1: Creation
+            { phase: 1, char: "Squidward Tentacles.png", name: "징징이", text: "내 화실에 온 걸 환영... 하진 않지만, 보물 지도를 고치려면 내 초상화가 필요해!" },
+            { phase: 1, char: "Squilliam Fancyson.png", name: "심해의 왕자", text: "하! 내 초상화가 더 멋지겠지만 말이야. 우선 '징징이의 화실(Paint)'을 열어 그림을 그리고 저장해봐!" },
+            { phase: 1, char: "Mr. Krabs.png", name: "집게사장", text: "돈! 아니, 비법 소스도 잊지 말라고! 보물의 핵심은 기록이지!" },
+            { phase: 1, char: "Pearl Krabs.png", name: "진주", text: "아빠, 너무 촌스러워! '비법 문서(Notepad)'에 비법을 적고 텍스트 파일(.txt)로 저장해야 한다구!" },
+            
+            // Phase 2: Scientist & Exploration
+            { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "이봐들! 파일 이름 뒤에 붙는 .png, .txt 같은 걸 '확장자'라고 해. 파일의 성격을 알려주지!" },
+            { phase: 2, char: "Bubble Bass.png", name: "버블 배스", text: "흥, 내 햄버거 주문서(.xlsx)나 운동 영상(.mp4)도 확장자가 다 다르지. 똑똑히 구분해야 할걸?" },
+            
+            // Phase 3: The Heist & Security
+            { phase: 3, char: "Sheldon J. Plankton.png", name: "플랑크톤", text: "하하하! 그 파일들을 내가 다 가져가 주지! 비법 소스는 내 것이다!" },
+            { phase: 3, char: "Karen Plankton.png", name: "캐런", text: "플랑크톤, 보안이 너무 허술해. 얘들아, '집게리아 금고(Explorer)'를 열어 파일들을 폴더에 숨겨!" },
+            
+            // Phase 4: Optimization & Tribute
+            { phase: 4, char: "Larry the Lobster.png", name: "래리", text: "파일이 너무 많아서 무거워! 근육처럼 꽉 압축해야겠어. ZIP 파일로 만들자!" },
+            { phase: 4, char: "Flying Dutchman.png", name: "레이잉 더치맨", text: "으하하하! 보물을 내게 보내라! 아니면 너희 영혼을 가져가겠다!" },
+            { phase: 4, char: "King Neptune.png", name: "넵튠 왕", text: "정중하게 '포털 사이트(Browser)'에서 나에게 메일을 보내도록 하라. 허허허!" },
+            
+            // Phase 5: Conclusion
+            { phase: 5, char: "Mrs. Puff.png", name: "퐁퐁 부인", text: "완벽해요! 당신은 이제 비키니 시티의 진정한 디지털 마스터입니다! 수료증을 받으세요!" }
+        ];
+
+        let state = {
+            phase: 0,
+            dialogueIdx: 0,
+            windows: {
+                'win-paint': { active: false },
+                'win-notepad': { active: false },
+                'win-explorer': { active: false },
+                'win-browser': { active: false }
+            },
+            files: [], // Array of { name: 'portrait.png', type: 'image', size: '15kb' }
+            zipCreated: false,
+            missionComplete: false
+        };
+
+        // --- CORE ENGINE ---
+        window.onload = () => {
+            lucide.createIcons();
+            updateDialogue();
+            updateExplorer();
+            initPaint();
+            startTime();
+        };
+
+        function startTime() {
+            const clock = document.getElementById('system-clock');
+            setInterval(() => {
+                const now = new Date();
+                clock.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }, 1000);
+        }
+
+        // --- DIALOGUE SYSTEM ---
+        function updateDialogue() {
+            const d = DIALOGUES[state.dialogueIdx];
+            if (!d) return;
+
+            const charImg = document.getElementById('char-img');
+            const charName = document.getElementById('char-name');
+            const charText = document.getElementById('char-text');
+
+            charImg.style.opacity = 0;
+            setTimeout(() => {
+                charImg.src = `images/${d.char}`;
+                charImg.style.opacity = 1;
+            }, 200);
+
+            charName.innerText = d.name;
+            charText.innerText = d.text;
+
+            // Mission Logic based on dialogue index
+            if (state.dialogueIdx === 4) openWindow('win-paint');
+            if (state.dialogueIdx === 6) openWindow('win-notepad');
+        }
+
+        function handleDialogue() {
+            if (state.dialogueIdx < DIALOGUES.length - 1) {
+                state.dialogueIdx++;
+                state.phase = DIALOGUES[state.dialogueIdx].phase;
+                updateDialogue();
+            } else {
+                alert("비키니 시티 디지털 마스터가 된 것을 축하해!");
+            }
+        }
+
+        // --- WINDOW MANAGEMENT ---
+        function openWindow(id) {
+            const win = document.getElementById(id);
+            win.classList.add('active');
+            win.style.opacity = '0';
+            win.style.transform = 'scale(0.8) translateY(20px)';
+            setTimeout(() => {
+                win.style.opacity = '1';
+                win.style.transform = 'scale(1) translateY(0)';
+            }, 50);
+            state.windows[id].active = true;
+        }
+
+        function closeWindow(id) {
+            const win = document.getElementById(id);
+            win.style.opacity = '0';
+            win.style.transform = 'scale(0.8) translateY(20px)';
+            setTimeout(() => {
+                win.classList.remove('active');
+            }, 300);
+            state.windows[id].active = false;
+        }
+
+        function dragWindow(e, id) {
+            const win = document.getElementById(id);
+            const header = win.querySelector('.window-header');
+            let posX = 0, posY = 0, mouseX = 0, mouseY = 0;
+
+            e.preventDefault();
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            document.onmousemove = (moveE) => {
+                posX = mouseX - moveE.clientX;
+                posY = mouseY - moveE.clientY;
+                mouseX = moveE.clientX;
+                mouseY = moveE.clientY;
+                win.style.top = (win.offsetTop - posY) + "px";
+                win.style.left = (win.offsetLeft - posX) + "px";
+            };
+
+            document.onmouseup = () => {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+        }
+
+        // --- PAINT APP ---
+        function initPaint() {
+            const canvas = document.getElementById('canvas-paint');
+            const ctx = canvas.getContext('2d');
+            let drawing = false;
+
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            canvas.onmousedown = () => drawing = true;
+            canvas.onmouseup = () => { drawing = false; ctx.beginPath(); };
+            canvas.onmousemove = (e) => {
+                if (!drawing) return;
+                ctx.lineWidth = 5;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#0056b3';
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(e.offsetX, e.offsetY);
+            };
+        }
+
+        function clearCanvas() {
+            const canvas = document.getElementById('canvas-paint');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveImage() {
+            const name = document.getElementById('paint-filename').value || "unnamed";
+            state.files.push({ name: name + ".png", type: 'image', icon: 'file-image' });
+            updateExplorer();
+            alert("그림이 '집게리아 금고'에 저장되었습니다!");
+            if (state.dialogueIdx === 5) handleDialogue(); // Move to next character
+        }
+
+        // --- NOTEPAD APP ---
+        function saveText() {
+            const name = document.getElementById('notepad-filename').value || "unnamed";
+            const content = document.getElementById('notepad-content').value;
+            if (!content) return alert("내용을 입력해주세요!");
+            state.files.push({ name: name + ".txt", type: 'text', icon: 'file-text' });
+            updateExplorer();
+            alert("문서가 '집게리아 금고'에 저장되었습니다!");
+            if (state.dialogueIdx === 7) handleDialogue(); 
+        }
+
+        // --- EXPLORER APP ---
+        function updateExplorer() {
+            const list = document.getElementById('explorer-list');
+            list.innerHTML = '';
+
+            state.files.forEach(file => {
+                const div = document.createElement('div');
+                div.className = 'flex flex-col items-center gap-1 cursor-pointer hover:bg-slate-100 p-2 rounded';
+                div.innerHTML = `
+                    <i data-lucide="${file.icon}" class="w-10 h-10 ${file.type === 'zip' ? 'text-yellow-500' : 'text-blue-400'}"></i>
+                    <span class="text-[10px] font-bold text-center break-all">${file.name}</span>
+                `;
+                list.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function simZipInExplorer() {
+            if (state.files.length < 2) return alert("압축할 파일이 부족해요! 먼저 그림과 문서를 저장하세요.");
+            state.zipCreated = true;
+            state.files = [{ name: 'vault.zip', type: 'zip', icon: 'archive' }];
+            updateExplorer();
+            alert("정말로 꽉 압축했어! 이제 'vault.zip' 파일 하나만 남았네!");
+            if (state.dialogueIdx === 12) handleDialogue();
+        }
+
+        // --- BROWSER APP ---
+        function toggleStartMenu() {
+            alert("비키니 시티 OS v1.0\n스폰지밥의 우정이 소스코드에 담겨있습니다!");
+        }
+
+        // Initialize Browser Content
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSignup();
+        });
+
+        function renderSignup() {
+            const content = document.getElementById('browser-content');
+            content.innerHTML = `
+                <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
+                    <h2 class="text-xl font-bold mb-4 text-center">넵튠 포털 회원가입</h2>
+                    <input type="text" id="b-id" placeholder="아이디" class="w-full border p-2 mb-2 rounded">
+                    <input type="password" id="b-pw" placeholder="비밀번호" class="w-full border p-2 mb-4 rounded">
+                    <label class="flex items-center gap-2 text-sm mb-4">
+                        <input type="checkbox" id="b-terms"> [필수] 비키니 시티 정보보호 약관에 동의합니다.
+                    </label>
+                    <button onclick="doSignup()" class="w-full bg-blue-500 text-white py-2 rounded font-bold">가입하기</button>
+                </div>
+            `;
+        }
+
+        function doSignup() {
+            const terms = document.getElementById('b-terms').checked;
+            if (!terms) return alert("약관에 동의해야 보물 지도를 보낼 수 있어!");
+            alert("회원가입 성공! 이제 국왕님께 이메일을 보내자.");
+            renderEmail();
+            if (state.dialogueIdx === 14) handleDialogue();
+        }
+
+        function renderEmail() {
+            const content = document.getElementById('browser-content');
+            content.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h2 class="text-xl font-bold mb-4"><i data-lucide="mail" class="inline"></i> 메일 보내기</h2>
+                    <div class="mb-2"><strong>받는 사람:</strong> king_neptune@ocean.com</div>
+                    <input type="text" id="m-sub" placeholder="제목: 비키니 시티 보물 지도 제출" class="w-full border p-2 mb-2 rounded">
+                    <textarea class="w-full border p-2 h-32 mb-4 rounded" placeholder="국왕님, 보물을 여기 보냅니다!"></textarea>
+                    <div class="p-3 bg-slate-50 border-2 border-dashed rounded-lg mb-4 flex items-center justify-between">
+                        <span id="attach-status">${state.zipCreated ? 'vault.zip 첨부됨' : '첨부파일 없음'}</span>
+                        <button onclick="attachZip()" class="bg-slate-200 px-3 py-1 rounded text-xs">파일 첨부</button>
+                    </div>
+                    <button onclick="sendFinalEmail()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-black text-lg">메일 보내기</button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function attachZip() {
+            if (!state.zipCreated) return alert("먼저 파일을 압축해야 해!");
+            document.getElementById('attach-status').innerText = "vault.zip 첨부됨";
+        }
+
+        function sendFinalEmail() {
+            if (!state.zipCreated) return alert("파일을 첨부해야지!");
+            alert("메일 발송 성공! 넵튠 국왕님께서 매우 기뻐하셔!");
+            if (state.dialogueIdx === 14) handleDialogue();
+            handleDialogue(); // Finish
+        }
+    </script>
+</body>
+
+</html>
