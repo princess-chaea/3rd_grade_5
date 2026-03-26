@@ -52,7 +52,8 @@
             background: white;
             border: 8px solid var(--sponge-brown);
             border-radius: 40px;
-            max-width: 900px; /* Increased from 700px */
+            max-width: 900px;
+            /* Increased from 700px */
             width: 100%;
             padding: 50px;
             box-shadow: 0 25px 0 rgba(0, 0, 0, 0.2);
@@ -61,10 +62,11 @@
 
         .intro-card h1 {
             color: var(--bikini-blue);
-            font-size: 5rem; /* Even larger */
+            font-size: 5rem;
+            /* Even larger */
             font-family: 'Gaegu', cursive;
             margin-bottom: 2.5rem;
-            text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0, 0, 0, 0.1);
         }
 
         /* Desktop Area */
@@ -114,47 +116,56 @@
         /* Desktop Icons */
         .desktop-icons-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, 100px);
-            grid-auto-rows: 100px;
+            grid-template-columns: repeat(auto-fill, 160px);
+            grid-auto-rows: 170px;
             gap: 20px;
             padding: 20px;
             height: 100%;
-            pointer-events: none; /* Let clicks pass to desktop but catch on icons */
+            pointer-events: none;
+            /* Let clicks pass to desktop but catch on icons */
         }
 
         .desktop-icon {
+            width: 140px;
+            height: 150px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 8px;
             padding: 10px;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s;
             pointer-events: auto;
             color: white;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .desktop-icon:hover {
             background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
         .desktop-icon i {
-            width: 72px; /* Even larger */
-            height: 72px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            width: 96px;
+            height: 96px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .desktop-icon i svg {
+            width: 100%;
+            height: 100%;
         }
 
         .desktop-icon span {
-            font-size: 14px; /* Larger text */
-            font-weight: 700;
-            white-space: nowrap; /* No wrap */
-            background: rgba(0, 0, 0, 0.4);
-            padding: 2px 8px;
-            border-radius: 4px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            white-space: nowrap;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 4px 12px;
+            border-radius: 6px;
+            text-align: center;
         }
 
         /* Context Menu - Win11 Style */
@@ -164,7 +175,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             width: 200px;
             padding: 8px;
             display: none;
@@ -275,41 +286,7 @@
             position: relative;
         }
 
-        /* Desktop Icons */
-        .desktop-icon {
-            width: 80px;
-            height: 90px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            border-radius: 8px;
-            padding: 5px;
-            transition: background 0.2s;
-        }
 
-        .desktop-icon:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .desktop-icon i {
-            font-size: 2rem;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
-        }
-
-        .desktop-icon span {
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-align: center;
-            word-break: break-all;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
 
         /* Character Dialogue Overlay */
         #dialogue-overlay {
@@ -371,7 +348,7 @@
             font-size: 5rem;
             font-family: 'Gaegu', cursive;
             margin-bottom: 2.5rem;
-            text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0, 0, 0, 0.1);
         }
 
         .dialogue-bubble {
@@ -441,7 +418,8 @@
 
         input:disabled {
             background-color: #f8fafc !important;
-            color: #1e293b !important; /* High contrast text even when disabled */
+            color: #1e293b !important;
+            /* High contrast text even when disabled */
             cursor: not-allowed;
             border-color: #e2e8f0 !important;
             opacity: 1 !important;
@@ -611,11 +589,13 @@
     <!-- Intro Screen (Teacher's Guide) -->
     <div id="intro-screen">
         <div class="intro-card">
-            <h1 class="font-black text-blue-600 mb-6 underline decoration-sponge-yellow decoration-8" style="font-size: 4.5rem;">비키니 시티 디지털 마스터 활동 안내</h1>
+            <h1 class="font-black text-blue-600 mb-6 underline decoration-sponge-yellow decoration-8"
+                style="font-size: 4.5rem;">비키니 시티 디지털 마스터 활동 안내</h1>
             <div class="grid grid-cols-2 gap-8 text-left mb-12">
                 <div class="bg-yellow-50 p-6 rounded-3xl border-4 border-yellow-200">
                     <h3 class="font-black text-2xl mb-3 text-yellow-700 kids-font">🎨 활동 1: 파일 생성</h3>
-                    <p class="text-xl text-slate-700 font-bold leading-relaxed">그림판(.png)과 메모장(.txt)을 사용해 직접 파일을 만들어봅니다.</p>
+                    <p class="text-xl text-slate-700 font-bold leading-relaxed">그림판(.png)과 메모장(.txt)을 사용해 직접 파일을 만들어봅니다.
+                    </p>
                 </div>
                 <div class="bg-blue-50 p-6 rounded-3xl border-4 border-blue-200">
                     <h3 class="font-black text-2xl mb-3 text-blue-700 kids-font">📚 활동 2: 확장자 탐색</h3>
@@ -651,7 +631,7 @@
             </div>
             <div class="desktop-icon" ondblclick="openWindow('win-explorer')">
                 <i data-lucide="folder" class="text-blue-400"></i>
-                <span class="text-lg">집게리아 금고</span>
+                <span class="text-lg">집게리아 금고 폴더</span>
             </div>
             <div class="desktop-icon" ondblclick="openWindow('win-browser')">
                 <i data-lucide="globe" class="text-indigo-400"></i>
@@ -707,7 +687,7 @@
         <!-- Explorer -->
         <div id="win-explorer" class="window" style="width: 600px; height: 400px; top: 150px; left: 300px;">
             <div class="window-header" onmousedown="dragWindow(event, 'win-explorer')">
-                <div class="window-title"><i data-lucide="folder" class="w-4 h-4"></i> 집게리아 금고 (Explorer)</div>
+                <div class="window-title"><i data-lucide="folder" class="w-4 h-4"></i> 집게리아 금고 폴더 (Explorer)</div>
                 <div class="window-controls">
                     <div class="control-btn close" onclick="closeWindow('win-explorer')">
                         <i data-lucide="x" class="w-4 h-4"></i>
@@ -763,13 +743,16 @@
         </div>
         <div class="dialogue-bubble">
             <p id="char-name" class="font-black text-red-500 text-sm uppercase mb-1">스폰지밥</p>
-            <p id="char-text" class="text-slate-800 font-bold leading-tight">안녕! 친구들! 비키니 시티에 온 걸 환영해! 우리와 함께 디지털 보물을 찾아보지 않을래?</p>
+            <p id="char-text" class="text-slate-800 font-bold leading-tight">안녕! 친구들! 비키니 시티에 온 걸 환영해! 우리와 함께 디지털 보물을
+                찾아보지 않을래?</p>
             <div class="flex justify-between w-full mt-6">
-                <button id="prev-btn" class="next-btn bg-slate-200 text-slate-600 hover:bg-slate-300" onclick="prevDialogue()" style="display: none;">
+                <button id="prev-btn" class="next-btn bg-slate-200 text-slate-600 hover:bg-slate-300"
+                    onclick="prevDialogue()" style="display: none;">
                     <i data-lucide="chevron-left" class="inline w-6 h-6"></i> 이전
                 </button>
                 <div class="flex-1"></div>
-                <button id="next-btn" class="next-btn" onclick="handleDialogue()">다음 <i data-lucide="chevron-right" class="inline w-6 h-6"></i></button>
+                <button id="next-btn" class="next-btn" onclick="handleDialogue()">다음 <i data-lucide="chevron-right"
+                        class="inline w-6 h-6"></i></button>
             </div>
         </div>
     </div>
@@ -865,20 +848,21 @@
             // Phase 2: Scientist & Exploration
             { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "이봐들! 파일 이름 뒤에 붙는 .png, .txt 같은 걸 '확장자'라고 해. 이건 파일의 '종류'를 알려주는 성격표 같은 거지!" },
             { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "예를 들어 .png는 그림🎨, .txt는 문서📝, .zip은 보따리 처럼 꽉 묶은 압축파일📦이야! 그 외에도 .mp4는 동영상🎬, .xlsx는 엑셀 데이터📊, .pptx는 발표 자료 슬라이드💻를 뜻해! 종류에 따라 열 수 있는 앱이 다르니 꼭 기억해!" },
-            { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "이제 내가 퀴즈를 낼 거야! 확장자명을 보고 어떤 파일인지 맞춰봐! (모두 정답을 맞춰야 넘어갈 수 있어!)", phase: "quiz" },
+            { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "이제 내가 퀴즈를 낼 거야! 준비됐니?" },
+            { phase: 2, char: "Sandy Cheeks.png", name: "다람이", text: "확장자명을 보고 어떤 파일인지 맞춰봐! (모두 정답을 맞춰야 넘어갈 수 있어!)", phase: "quiz" },
             { phase: 2, char: "Bubble Bass.png", name: "버블 배스", text: "흥, 내 햄버거 주문서(.xlsx)나 운동 영상(.mp4)도 확장자가 다 다르지. 똑똑히 구분해야 할걸?" },
 
             // Phase 3: The Heist & Security
             { phase: 3, char: "Sheldon J. Plankton.png", name: "플랑크톤", text: "하하하! 그 파일들을 내가 다 가져가 주지! 비법 소스는 내 것이다!" },
-            { phase: 3, char: "Karen Plankton.png", name: "캐런", text: "플랑크톤, 보안이 너무 허술해. 얘들아, '집게리아 금고(Explorer)'를 열어 파일들을 폴더에 숨겨!" },
+            { phase: 3, char: "Karen Plankton.png", name: "캐런", text: "플랑크톤, 보안이 너무 허술해. 얘들아, '집게리아 금고 폴더(Explorer)'를 열어 파일들을 폴더에 숨겨!" },
 
             // Phase 4: Optimization & Tribute
-            { phase: 4, char: "Larry the Lobster.png", name: "래리", text: "파일이 너무 많아서 무거워! 탐색기에서 파일들을 클릭(선택)한 뒤 우클릭해서 '압축하기(ZIP)'를 눌러봐! 근육처럼 꽉 압축하자구!", requires: "zip_files" },
+            { phase: 4, char: "Larry the Lobster.png", name: "래리", text: "파일이 너무 많아서 무거워! '집게리아 금고 폴더'에서 파일들을 클릭(선택)한 뒤 우클릭해서 '압축하기(ZIP)'를 눌러봐! 근육처럼 꽉 압축하자구!", requires: "zip_files" },
             { phase: 4, char: "Flying Dutchman.png", name: "레이잉 더치맨", text: "으하하하! 보물을 내게 보내라! 아니면 너희 영혼을 가져가겠다!" },
             { phase: 4, char: "King Neptune.png", name: "넵튠 왕", text: "허허, 보물 지도를 보내려느냐? 우선 '비키니 포털'에서 회원가입부터 하거라. 내가 하나씩 알려주마.", requires: "signup_complete" },
 
             // Phase 5: Conclusion
-            { phase: 5, char: "Mrs. Puff.png", name: "퐁퐁 부인", text: "완벽해요! 당신은 이제 비키니 시티의 진정한 디지털 마스터입니다! 수료증을 받으세요!" }
+            { phase: 5, char: "Mrs. Puff.png", name: "퐁퐁 부인", text: "완벽해요! 당신은 이제 비키니 시티의 진정한 디지털 마스터입니다! 수료증을 받으세요!", requires: "send_email" }
         ];
 
         let state = {
@@ -1063,7 +1047,7 @@
         function handleMenuAction(action) {
             if (!contextTarget) return;
             const fileName = contextTarget.getAttribute('data-name');
-            
+
             if (action === 'open') {
                 openFile(fileName);
             } else if (action === 'zip') {
@@ -1186,9 +1170,9 @@
             updateExplorer();
             updateDialogue();
             showCustomModal("그림이 저장되었습니다! '집게리아 금고'에서 확인해보세요.");
-            
+
             // Auto-advance
-            setTimeout(handleDialogue, 1500); 
+            setTimeout(handleDialogue, 1500);
         }
 
         // --- NOTEPAD APP ---
@@ -1215,12 +1199,12 @@
                 const div = document.createElement('div');
                 div.className = `explorer-item flex flex-col items-center gap-2 cursor-pointer p-4 rounded-xl transition-all hover:scale-105 ${file.selected ? 'bg-indigo-100 ring-2 ring-indigo-400' : 'hover:bg-black/5'}`;
                 div.setAttribute('data-name', file.name);
-                
+
                 div.onclick = (e) => {
                     file.selected = !file.selected;
                     updateExplorer();
                 };
-                
+
                 div.ondblclick = (e) => {
                     e.stopPropagation();
                     openFile(file.name);
@@ -1236,7 +1220,7 @@
                     }
                     showContextMenu(e, file.name);
                 };
-                
+
                 div.innerHTML = `
                     <div class="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-lg flex items-center justify-center shadow-sm border border-white/20">
                         <i data-lucide="${file.icon}" class="w-12 h-12 ${file.type === 'zip' ? 'text-yellow-500' : 'text-blue-400'}"></i>
@@ -1267,14 +1251,14 @@
         function simZipInExplorer() {
             const selected = state.files.filter(f => f.selected);
             if (selected.length < 2) return showCustomModal("압축할 파일들을 먼저 마우스로 클릭해서 선택해줘! (2개 이상)");
-            
+
             state.zipCreated = true;
             state.actions.zip_files = true; // Unlock dialogue
             state.files = [{ name: 'vault.zip', type: 'zip', icon: 'archive', selected: false }];
             updateExplorer();
             updateDialogue();
             showCustomModal("정말로 꽉 압축했어! 이제 'vault.zip' 파일 하나만 남았네!");
-            
+
             // Auto-advance
             setTimeout(handleDialogue, 1500);
         }
@@ -1292,27 +1276,26 @@
         function renderSignup() {
             const content = document.getElementById('browser-content');
             const step = state.signupStep;
-            
-            // Dynamic Neptune Message in Dialogue Bubble
+
             const neptuneMsgs = [
-                "허허, 먼저 아이디를 정하거라. 8~12자 영문/숫자로 멋지게 지어보렴!",
+                "허허, 먼저 아이디를 정하거라. 8~12자 영문/숫자로 멋지게 지어보렴! 다 적었으면 '중복확인'을 누르거라.",
                 "오호, 좋은 아이디로구나. 이제 비밀번호를 설정하자. 8자리 이상, 숫자와 특수문자를 꼭 섞어야 안전하단다!",
-                "비밀번호 확인까지 완벽하군! 이제 네 이름을 알려주겠니?",
+                "비밀번호 확인까지 완벽하군! 이제 네 이름을 알려주겠니? 이름을 적고 '확인'을 누르거라.",
+                "좋아좋아! 이제 비밀번호를 잊었을 때를 대비한 질문과 답변을 적으렴. '안녕'이라고 인사하는 게 우리 방식이지!",
                 "생년월일과 성별도 선택해보렴. 성별은 선택사항이니 부끄러우면 안 해도 좋단다.",
                 "이제 가장 중요한 휴대폰 본인인증 단계란다. '인증요청'을 눌러서 본인임을 증명하거라.",
-                "마지막으로 비밀번호를 잊었을 때를 대비한 질문과 답변을 적으렴. '안녕'이라고 인사하는 게 우리 방식이지!",
-                "이용 약관에 모두 동의하면 비키니 포털의 정식 회원이 되는 거란다!"
+                "이용 약관에 모두 동의하면 비키니 포털의 정식 회원이 되는 거란다! 필수 항목은 반드시 체크해야 한단다."
             ];
-            
-            if (state.windows['win-browser'].active) { // Only update if browser is already open
-                 const charText = document.getElementById('char-text');
-                 const charName = document.getElementById('char-name');
-                 const charImg = document.getElementById('char-img');
-                 if (charName) {
-                     charName.innerText = "넵튠 왕";
-                     charImg.src = "images/King Neptune.png";
-                     charText.innerText = neptuneMsgs[step] || "모든 준비가 끝났구나! 가입 버튼을 누르거라.";
-                 }
+
+            if (state.windows['win-browser'].active) {
+                const charText = document.getElementById('char-text');
+                const charName = document.getElementById('char-name');
+                const charImg = document.getElementById('char-img');
+                if (charName) {
+                    charName.innerText = "넵튠 왕";
+                    charImg.src = "images/King Neptune.png";
+                    charText.innerText = neptuneMsgs[step] || "모든 준비가 끝났구나! 가입 버튼을 누르거라.";
+                }
             }
 
             content.innerHTML = `
@@ -1322,12 +1305,15 @@
                     <div class="space-y-4 mb-8">
                         <div class="${step < 0 ? 'opacity-30 pointer-events-none' : ''}">
                             <label class="block text-sm font-bold text-slate-500 mb-1">아이디 (필수)</label>
-                            <input type="text" id="b-id" oninput="checkSignupProgress(0)" placeholder="8~12자 영문/숫자" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none transition-colors" value="${state.userData.id}" ${step > 0 ? 'disabled' : ''}>
+                            <div class="flex gap-2">
+                                <input type="text" id="b-id" placeholder="8~12자 영문/숫자" class="flex-1 border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none transition-colors" value="${state.userData.id || ''}" ${step > 0 ? 'disabled' : ''}>
+                                <button onclick="verifyID()" class="bg-indigo-600 text-white px-4 rounded-2xl font-bold hover:bg-indigo-700 transition-colors" ${step > 0 ? 'style="display:none"' : ''}>중복확인</button>
+                            </div>
                         </div>
                         <div class="grid grid-cols-2 gap-4 ${step < 1 ? 'opacity-30 pointer-events-none' : ''}">
                             <div>
                                 <label class="block text-sm font-bold text-slate-500 mb-1">비밀번호 (필수)</label>
-                                <input type="password" id="b-pw" oninput="checkSignupProgress(1)" placeholder="••••••••" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none text-xl" value="${state.userData.pw}" ${step > 1 ? 'disabled' : ''}>
+                                <input type="password" id="b-pw" oninput="checkSignupProgress(1)" placeholder="••••••••" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none text-xl" value="${state.userData.pw || ''}" ${step > 1 ? 'disabled' : ''}>
                                 <p id="pw-hint" class="text-[10px] mt-1 text-slate-400 font-bold">※ 8자 이상, 숫자, 특수문자 포함</p>
                             </div>
                             <div>
@@ -1338,7 +1324,10 @@
                         </div>
                         <div class="${step < 2 ? 'opacity-30 pointer-events-none' : ''}">
                             <label class="block text-sm font-bold text-slate-500 mb-1">이름 (필수)</label>
-                            <input type="text" id="b-name" oninput="checkSignupProgress(2)" placeholder="실명을 입력하세요" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" value="${state.userData.name || ''}" ${step > 2 ? 'disabled' : ''}>
+                            <div class="flex gap-2">
+                                <input type="text" id="b-name" placeholder="실명을 입력하세요" class="flex-1 border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" value="${state.userData.name || ''}" ${step > 2 ? 'disabled' : ''}>
+                                <button onclick="verifyName()" class="bg-indigo-600 text-white px-4 rounded-2xl font-bold hover:bg-indigo-700 transition-colors" ${step > 2 ? 'style="display:none"' : ''}>확인</button>
+                            </div>
                         </div>
                         <div class="grid grid-cols-2 gap-4 ${step < 3 ? 'opacity-30 pointer-events-none' : ''}">
                             <div>
@@ -1347,24 +1336,24 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-slate-500 mb-1">정답 입력 (필수)</label>
-                                <input type="text" id="b-recovery" oninput="checkSignupProgress(5)" placeholder="'안녕'을 입력하세요" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" value="${state.userData.recoveryAnswer || ''}" ${step > 5 ? 'disabled' : ''}>
+                                <input type="text" id="b-recovery" oninput="checkSignupProgress(3)" placeholder="'안녕'을 입력하세요" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" value="${state.userData.recoveryAnswer || ''}" ${step > 3 ? 'disabled' : ''}>
                             </div>
                         </div>
-                        <div class="grid grid-cols-3 gap-4 ${step < 3 ? 'opacity-30 pointer-events-none' : ''}">
+                        <div class="grid grid-cols-3 gap-4 ${step < 4 ? 'opacity-30 pointer-events-none' : ''}">
                             <div class="col-span-2">
                                 <label class="block text-sm font-bold text-slate-500 mb-1">생년월일 (필수)</label>
-                                <input type="date" id="b-birth" oninput="checkSignupProgress(3)" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" value="${state.userData.birth || ''}" ${step > 3 ? 'disabled' : ''}>
+                                <input type="date" id="b-birth" oninput="checkSignupProgress(4)" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" value="${state.userData.birth || ''}" ${step > 4 ? 'disabled' : ''}>
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-slate-500 mb-1">성별 (선택)</label>
-                                <select id="b-gender" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none bg-white" ${step > 3 ? 'disabled' : ''}>
+                                <select id="b-gender" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none bg-white" ${step > 4 ? 'disabled' : ''}>
                                     <option value="">선택안함</option>
                                     <option value="male">남성</option>
                                     <option value="female">여성</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="${step < 4 ? 'opacity-30 pointer-events-none' : ''}">
+                        <div class="${step < 5 ? 'opacity-30 pointer-events-none' : ''}">
                             <label class="block text-sm font-bold text-slate-500 mb-1">휴대전화 번호 (필수 본인인증)</label>
                             <div class="flex gap-2">
                                 <input type="tel" id="b-phone" placeholder="010-0000-0000" class="flex-1 border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" ${isPhoneVerified ? 'disabled' : ''}>
@@ -1383,11 +1372,11 @@
 
                     <div class="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 mb-8 space-y-3 ${step < 6 ? 'opacity-30 pointer-events-none' : ''}">
                         <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" id="b-terms" onchange="checkSignupProgress(6)" class="w-5 h-5 accent-indigo-600">
+                            <input type="checkbox" id="b-terms" class="w-5 h-5 accent-indigo-600">
                             <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">[필수] 이용약관 및 개인정보 수집 이용 동의</span>
                         </label>
                         <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" id="b-security" onchange="checkSignupProgress(6)" class="w-5 h-5 accent-indigo-600">
+                            <input type="checkbox" id="b-security" class="w-5 h-5 accent-indigo-600">
                             <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">[필수] 비키니 로봇 방지 및 보안 정책 동의</span>
                         </label>
                         <label class="flex items-center gap-3 cursor-pointer group">
@@ -1406,37 +1395,48 @@
             lucide.createIcons();
         }
 
+        function verifyID() {
+            const id = document.getElementById('b-id').value;
+            if (!id || id.length < 8) return showCustomModal("아이디를 8자 이상 입력해줘!", "입력 확인");
+            state.userData.id = id;
+            state.signupStep = 1;
+            renderSignup();
+            showCustomModal("사용 가능한 아이디입니다!", "중복 확인 완료");
+        }
+
+        function verifyName() {
+            const name = document.getElementById('b-name').value;
+            if (!name || name.length < 2) return showCustomModal("실명을 입력해줘!", "입력 확인");
+            state.userData.name = name;
+            state.signupStep = 3;
+            renderSignup();
+        }
+
         function checkSignupProgress(currentStep) {
-            const id = document.getElementById('b-id')?.value;
             const pw = document.getElementById('b-pw')?.value;
             const pwConfirm = document.getElementById('b-pw-confirm')?.value;
-            const name = document.getElementById('b-name')?.value;
-            
+
             // Persist values in state
-            if (id !== undefined) state.userData.id = id;
             if (pw !== undefined) state.userData.pw = pw;
             if (pwConfirm !== undefined) state.userData.pwConfirm = pwConfirm;
-            if (name !== undefined) state.userData.name = name;
 
             const birth = document.getElementById('b-birth')?.value;
             const recovery = document.getElementById('b-recovery')?.value;
-            const terms = document.getElementById('b-terms')?.checked;
-            const security = document.getElementById('b-security')?.checked;
 
             if (recovery !== undefined) state.userData.recoveryAnswer = recovery;
             if (birth !== undefined) state.userData.birth = birth;
 
             const psSafe = checkPasswordStrength(pw);
             const psMatch = pw === pwConfirm;
-            
+
             const hint = document.getElementById('pw-hint');
             const matchMsg = document.getElementById('pw-match-msg');
-            
+
             if (hint) {
                 hint.className = psSafe ? "text-[10px] mt-1 text-emerald-500 font-bold" : "text-[10px] mt-1 text-red-400 font-bold";
                 hint.innerText = psSafe ? "안전한 비밀번호입니다! ✅" : "※ 8자 이상, 숫자, 특수문자를 포함해야 해요! ❌";
             }
-            
+
             if (matchMsg) {
                 if (!pwConfirm) {
                     matchMsg.innerText = "";
@@ -1449,23 +1449,14 @@
                 }
             }
 
-            if (state.signupStep === 0 && id?.length >= 8) {
-                state.signupStep = 1;
-                renderSignup();
-            } else if (state.signupStep === 1 && psSafe && psMatch) {
+            if (state.signupStep === 1 && psSafe && psMatch) {
                 state.signupStep = 2;
                 renderSignup();
-            } else if (state.signupStep === 2 && name?.length >= 2) {
-                state.signupStep = 3;
-                renderSignup();
-            } else if (state.signupStep === 3 && birth) {
+            } else if (state.signupStep === 3 && recovery === "안녕") {
                 state.signupStep = 4;
                 renderSignup();
-            } else if (state.signupStep === 5 && recovery === "안녕") {
-                state.signupStep = 6;
-                renderSignup();
-            } else if (state.signupStep === 6 && terms && security) {
-                // Stay on step 6 but ready to submit
+            } else if (state.signupStep === 4 && birth) {
+                state.signupStep = 5;
                 renderSignup();
             }
         }
@@ -1476,10 +1467,10 @@
         function requestAuthCode() {
             const phone = document.getElementById('b-phone').value;
             if (!phone || phone.length < 10) return showCustomModal("올바른 휴대전화 번호를 입력해줘!", "인증 요청");
-            
+
             generatedCode = Math.floor(1000 + Math.random() * 9000).toString();
             showCustomModal(`[비키니시티] 인증번호는 [${generatedCode}] 입니다.`, "가상 SMS 도착");
-            
+
             document.getElementById('auth-code-area').classList.remove('hidden');
             document.getElementById('auth-status').innerText = "인증번호가 발송되었습니다.";
             document.getElementById('auth-status').className = "text-xs mt-1 text-indigo-500 font-bold";
@@ -1489,8 +1480,8 @@
             const input = document.getElementById('b-auth-code').value;
             if (input === generatedCode) {
                 isPhoneVerified = true;
-                state.signupStep = 5; // Move to recovery question after phone auth
-                showCustomModal("본인인증 성공! 이제 비밀번호 질문을 작성하렴.", "본인인증 완료");
+                state.signupStep = 6; // Move to terms
+                showCustomModal("본인인증 성공! 이제 마지막 단계로 넘어가렴.", "본인인증 완료");
                 renderSignup();
             } else {
                 showCustomModal("인증번호가 일치하지 않아! 다시 확인해줄래?", "인증 실패");
@@ -1505,29 +1496,12 @@
         }
 
         function doSignup() {
-            const id = document.getElementById('b-id').value;
-            const pw = document.getElementById('b-pw').value;
-            const pwConfirm = document.getElementById('b-pw-confirm').value;
-            const name = document.getElementById('b-name').value;
-            const birth = document.getElementById('b-birth').value;
-            const terms = document.getElementById('b-terms').checked;
-            const security = document.getElementById('b-security').checked;
+            const id = document.getElementById('b-id')?.value || state.userData.id;
+            const name = document.getElementById('b-name')?.value || state.userData.name;
+            const terms = document.getElementById('b-terms')?.checked;
+            const security = document.getElementById('b-security')?.checked;
 
-            if (!id || id.length < 4) return showCustomModal("아이디를 4자 이상 입력해줘!", "입력 확인");
-            
-            if (!checkPasswordStrength(pw)) {
-                return showCustomModal("비밀번호 보안 단계가 낮아!\n- 8자리 이상\n- 숫자 포함\n- 특수문자 포함\n이 세 가지를 모두 지켜줘!", "보안 위험");
-            }
-            if (pw !== pwConfirm) return showCustomModal("비밀번호 확인이 일치하지 않아!", "보안 확인");
-            
-            if (!isPhoneVerified) return showCustomModal("휴대폰 본인인증을 먼저 완료해줘!", "인증 확인");
-            
-            const recovery = document.getElementById('b-recovery').value;
-            if (recovery !== "안녕") return showCustomModal("비밀번호 찾기 정답에 '안녕'을 입력해줘야 해!", "입력 확인");
-
-            state.userData.id = id;
-            state.userData.pw = pw;
-            state.userData.recoveryAnswer = recovery;
+            if (!terms || !security) return showCustomModal("필수 약관에 모두 동의해야 가입할 수 있어!", "약관 동의 확인");
 
             state.actions.signup_complete = true;
             showCustomModal(`${name}님, 본인인증 및 회원가입이 완료되었습니다! 이제 로그인해볼까요?`, "가입 완료!");
@@ -1542,7 +1516,7 @@
             content.innerHTML = `
                 <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md border-4 border-slate-900">
                     <h2 class="text-2xl font-black mb-4 text-center">비키니 포털 로그인</h2>
-                    <input type="text" id="l-id" placeholder="아이디" class="w-full border-2 p-3 mb-2 rounded-xl" value="${state.userData.id}">
+                    <input type="text" id="l-id" placeholder="아이디" class="w-full border-2 p-3 mb-2 rounded-xl" value="">
                     <input type="password" id="l-pw" placeholder="비밀번호" class="w-full border-2 p-3 mb-4 rounded-xl">
                     <button onclick="doLogin()" class="w-full bg-emerald-500 text-white py-3 rounded-xl font-black text-lg shadow-md mb-4">로그인하기</button>
                     <div class="text-center">
@@ -1556,7 +1530,7 @@
             const id = document.getElementById('l-id').value;
             const pw = document.getElementById('l-pw').value;
             if (!id || !pw) return showCustomModal("아이디와 비밀번호를 모두 입력해!");
-            
+
             if (id === state.userData.id && pw === state.userData.pw) {
                 state.actions.login_complete = true;
                 showCustomModal("로그인 성공! 이제 국왕님께 이메일을 보내자.");
@@ -1597,11 +1571,37 @@
             content.innerHTML = `
                 <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md border-4 border-emerald-200">
                     <h2 class="text-2xl font-black mb-4 text-center text-emerald-600">비밀번호 재설정</h2>
-                    <input type="password" id="reset-pw" placeholder="새 비밀번호 (8자 이상+숫자+특수)" class="w-full border-2 p-3 mb-2 rounded-xl outline-none focus:border-emerald-400">
-                    <input type="password" id="reset-pw-confirm" placeholder="새 비밀번호 확인" class="w-full border-2 p-3 mb-4 rounded-xl outline-none focus:border-emerald-400">
+                    <div class="mb-4">
+                        <input type="password" id="reset-pw" oninput="validateResetPW()" placeholder="새 비밀번호" class="w-full border-2 p-3 rounded-xl outline-none focus:border-emerald-400">
+                        <p id="reset-pw-hint" class="text-[10px] mt-1 text-slate-400 font-bold">※ 8자 이상, 숫자, 특수문자 포함</p>
+                    </div>
+                    <div class="mb-4">
+                        <input type="password" id="reset-pw-confirm" oninput="validateResetPW()" placeholder="새 비밀번호 확인" class="w-full border-2 p-3 rounded-xl outline-none focus:border-emerald-400">
+                        <p id="reset-pw-match" class="text-[10px] mt-1 font-bold"></p>
+                    </div>
                     <button onclick="doResetPassword()" class="w-full bg-emerald-500 text-white py-3 rounded-xl font-black text-lg shadow-md mb-2">비밀번호 변경하기</button>
+                    <button onclick="renderLogin()" class="w-full text-slate-400 text-sm font-bold py-2">돌아가기</button>
                 </div>
             `;
+        }
+
+        function validateResetPW() {
+            const pw = document.getElementById('reset-pw').value;
+            const confirm = document.getElementById('reset-pw-confirm').value;
+            const hint = document.getElementById('reset-pw-hint');
+            const match = document.getElementById('reset-pw-match');
+
+            const psSafe = checkPasswordStrength(pw);
+            hint.className = psSafe ? "text-[10px] mt-1 text-emerald-500 font-bold" : "text-[10px] mt-1 text-red-400 font-bold";
+            hint.innerText = psSafe ? "안전한 비밀번호입니다! ✅" : "※ 8자 이상, 숫자, 특수문자를 포함해야 해요! ❌";
+
+            if (confirm) {
+                const psMatch = pw === confirm;
+                match.className = psMatch ? "text-[10px] mt-1 text-emerald-500 font-bold" : "text-[10px] mt-1 text-red-400 font-bold";
+                match.innerText = psMatch ? "비밀번호가 일치합니다! ✅" : "비밀번호가 일치하지 않아요! ❌";
+            } else {
+                match.innerText = "";
+            }
         }
 
         function doResetPassword() {
@@ -1621,7 +1621,7 @@
         function renderEmail() {
             const content = document.getElementById('browser-content');
             state.attachmentAttached = false; // Reset for security lesson
-            
+
             content.innerHTML = `
                 <div class="bg-white p-6 rounded-xl shadow-md border-4 border-indigo-200">
                     <h2 class="text-2xl font-black mb-4"><i data-lucide="mail" class="inline w-6 h-6"></i> 메일 보내기</h2>
@@ -1655,7 +1655,7 @@
             state.actions.send_email = true; // Unlock dialogue
             showCustomModal("메일 발송 성공! 넵튠 국왕님께서 매우 기뻐하셔!", "미션 성공!");
             updateDialogue(); // Unlock final dialogue
-            
+
             // Auto-advance removed to allow manual browsing
             // setTimeout(handleDialogue, 1500); 
         }
@@ -1667,10 +1667,10 @@
                 { ext: ".txt", ans: "텍스트 문서", options: ["노래 파일", "텍스트 문서", "실행 파일"] },
                 { ext: ".zip", ans: "압축 파일", options: ["압축 파일", "동영상 파일", "이미지 파일"] }
             ];
-            
+
             let currentQ = state.quizIdx || 0;
             const q = questions[currentQ];
-            
+
             charText.innerHTML = `
                 <div class="mb-4">질문 ${currentQ + 1}/3: <span class="text-blue-600 font-black">${q.ext}</span>는 어떤 종류의 파일일까?</div>
                 <div class="grid grid-cols-1 gap-2">
@@ -1688,7 +1688,7 @@
                 { ext: ".zip", ans: "압축 파일" }
             ];
             const currentQ = state.quizIdx || 0;
-            
+
             if (selected === questions[currentQ].ans) {
                 if (currentQ < 2) {
                     state.quizIdx = currentQ + 1;
