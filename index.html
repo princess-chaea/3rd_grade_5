@@ -782,8 +782,8 @@
         <p class="text-3xl font-bold mb-10 bg-white/20 px-8 py-3 rounded-full backdrop-blur-md">비키니 시티 디지털 마스터 등극!</p>
         <img src="images/all.png" class="victory-img" alt="All Characters Group Portrait">
         <div class="space-y-4">
-            <h2 class="text-4xl font-black text-yellow-300 drop-shadow-md kids-font">당신은 이제 파일 관리의 신입니다!</h2>
-            <p class="text-xl font-medium opacity-90">선생님께 이 화면을 보여드리고 도장을 받으세요!</p>
+            <h2 class="text-4xl font-black text-yellow-300 drop-shadow-md kids-font">어려워하는 친구들을 도와주세요!</h2>
+            <p class="text-xl font-medium opacity-90">ㅇ!</p>
         </div>
         <button onclick="location.reload()"
             class="mt-12 bg-white text-blue-600 px-10 py-4 rounded-full font-black text-2xl shadow-xl hover:scale-110 transition-transform">
@@ -793,15 +793,15 @@
 
     <!-- Context Menu Area -->
     <div id="context-menu">
-        <div class="menu-item" onclick="handleMenuAction('open')">
+        <div class="menu-item" id="menu-open" onclick="handleMenuAction('open')">
             <i data-lucide="external-link"></i> 열기
         </div>
-        <div class="menu-divider"></div>
-        <div class="menu-item text-blue-600 font-bold" onclick="handleMenuAction('zip')">
+        <div class="menu-divider" id="menu-sep-1"></div>
+        <div class="menu-item text-blue-600 font-bold" id="menu-zip" onclick="handleMenuAction('zip')">
             <i data-lucide="archive" class="text-blue-600"></i> ZIP으로 압축하기
         </div>
-        <div class="menu-divider"></div>
-        <div class="menu-item text-red-600" onclick="handleMenuAction('delete')">
+        <div class="menu-divider" id="menu-sep-2"></div>
+        <div class="menu-item text-red-600" id="menu-delete" onclick="handleMenuAction('delete')">
             <i data-lucide="trash-2" class="text-red-600"></i> 삭제
         </div>
     </div>
@@ -1031,16 +1031,49 @@
         // --- CONTEXT MENU LOGIC ---
         let contextTarget = null;
         document.addEventListener('contextmenu', e => {
-            const item = e.target.closest('.explorer-item, .desktop-icon');
-            if (item) {
+            const desk = e.target.closest('#desktop');
+            const win = e.target.closest('.window');
+
+            if (desk || win) {
                 e.preventDefault();
-                contextTarget = item;
+                const item = e.target.closest('.explorer-item, .desktop-icon');
+                const explorerWin = e.target.closest('#win-explorer');
                 const menu = document.getElementById('context-menu');
-                menu.style.display = 'flex';
-                menu.style.left = e.clientX + 'px';
-                menu.style.top = e.clientY + 'px';
-            } else {
-                document.getElementById('context-menu').style.display = 'none';
+
+                // Identify target and configure menu
+                if (item) {
+                    contextTarget = item;
+                    const isExplorerItem = item.classList.contains('explorer-item');
+                    const isDesktopIcon = item.classList.contains('desktop-icon');
+
+                    document.getElementById('menu-open').style.display = 'flex';
+                    document.getElementById('menu-sep-1').style.display = isExplorerItem ? 'block' : 'none';
+                    document.getElementById('menu-zip').style.display = isExplorerItem ? 'flex' : 'none';
+                    document.getElementById('menu-sep-2').style.display = isExplorerItem ? 'block' : 'none';
+                    document.getElementById('menu-delete').style.display = isExplorerItem ? 'flex' : 'none';
+
+                    menu.style.display = 'flex';
+                    menu.style.left = e.clientX + 'px';
+                    menu.style.top = e.clientY + 'px';
+                } else if (explorerWin) {
+                    // Empty space in Explorer: Show ZIP if items are selected
+                    const hasSelected = state.files.some(f => f.selected);
+                    if (hasSelected) {
+                        document.getElementById('menu-open').style.display = 'none';
+                        document.getElementById('menu-sep-1').style.display = 'none';
+                        document.getElementById('menu-zip').style.display = 'flex';
+                        document.getElementById('menu-sep-2').style.display = 'none';
+                        document.getElementById('menu-delete').style.display = 'none';
+
+                        menu.style.display = 'flex';
+                        menu.style.left = e.clientX + 'px';
+                        menu.style.top = e.clientY + 'px';
+                    } else {
+                        menu.style.display = 'none';
+                    }
+                } else {
+                    menu.style.display = 'none';
+                }
             }
         });
 
@@ -1049,13 +1082,17 @@
         });
 
         function handleMenuAction(action) {
+            if (action === 'zip') {
+                simZipInExplorer();
+                contextTarget = null;
+                return;
+            }
+
             if (!contextTarget) return;
             const fileName = contextTarget.getAttribute('data-name');
 
             if (action === 'open') {
                 openFile(fileName);
-            } else if (action === 'zip') {
-                simZipInExplorer(); // Now triggered via context menu
             } else if (action === 'delete') {
                 state.files = state.files.filter(f => f.name !== fileName);
                 updateExplorer();
@@ -1204,6 +1241,7 @@
                 div.className = `explorer-item flex flex-col items-center gap-2 cursor-pointer p-4 rounded-xl transition-all hover:scale-105 ${file.selected ? 'bg-indigo-100 ring-2 ring-indigo-400' : 'hover:bg-black/5'}`;
                 div.setAttribute('data-name', file.name);
 
+                // Selection on click
                 div.onclick = (e) => {
                     file.selected = !file.selected;
                     updateExplorer();
@@ -1212,17 +1250,6 @@
                 div.ondblclick = (e) => {
                     e.stopPropagation();
                     openFile(file.name);
-                };
-
-                // Right click for context menu
-                div.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    if (!file.selected) {
-                        state.files.forEach(f => f.selected = false);
-                        file.selected = true;
-                        updateExplorer();
-                    }
-                    showContextMenu(e, file.name);
                 };
 
                 div.innerHTML = `
@@ -1267,32 +1294,7 @@
             setTimeout(handleDialogue, 1500);
         }
 
-        function showContextMenu(e, name) {
-            e.preventDefault();
-            const existing = document.getElementById('context-menu');
-            if (existing) existing.remove();
 
-            const menu = document.createElement('div');
-            menu.id = 'context-menu';
-            menu.className = 'fixed bg-white border border-slate-200 shadow-2xl rounded-xl py-2 z-[9999] min-w-[160px] font-bold text-sm';
-            menu.style.top = `${e.clientY}px`;
-            menu.style.left = `${e.clientX}px`;
-
-            menu.innerHTML = `
-                <div class="px-4 py-2 hover:bg-indigo-50 cursor-pointer flex items-center gap-2 transition-colors" onclick="simZipInExplorer()">
-                    <i data-lucide="archive" class="w-4 h-4 text-yellow-600"></i>
-                    압축하기 (ZIP)
-                </div>
-            `;
-            document.body.appendChild(menu);
-            lucide.createIcons();
-
-            const closeMenu = () => {
-                if (menu) menu.remove();
-                document.removeEventListener('click', closeMenu);
-            };
-            setTimeout(() => document.addEventListener('click', closeMenu), 10);
-        }
 
         // --- BROWSER APP ---
         function toggleStartMenu() {
