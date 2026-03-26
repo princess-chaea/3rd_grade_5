@@ -1444,6 +1444,13 @@
         function verifyID() {
             const id = document.getElementById('b-id').value;
             if (!id || id.length < 8) return showCustomModal("아이디를 8자 이상 입력해줘!", "입력 확인");
+            
+            // Regex for English letters and numbers only
+            const idRegex = /^[a-zA-Z0-9]+$/;
+            if (!idRegex.test(id)) {
+                return showCustomModal("아이디는 영문자와 숫자만 사용할 수 있어!", "입력 확인");
+            }
+
             state.userData.id = id;
             state.signupStep = 1;
             renderSignup();
