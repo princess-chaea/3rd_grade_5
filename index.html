@@ -783,7 +783,6 @@
         <img src="images/all.png" class="victory-img" alt="All Characters Group Portrait">
         <div class="space-y-4">
             <h2 class="text-4xl font-black text-yellow-300 drop-shadow-md kids-font">어려워하는 친구들을 도와주세요!</h2>
-            <p class="text-xl font-medium opacity-90">ㅇ!</p>
         </div>
         <button onclick="location.reload()"
             class="mt-12 bg-white text-blue-600 px-10 py-4 rounded-full font-black text-2xl shadow-xl hover:scale-110 transition-transform">
@@ -894,7 +893,9 @@
                 id: '',
                 pw: '',
                 recoveryAnswer: ''
-            }
+            },
+            emailSubject: '',
+            emailContent: ''
         };
 
         // --- CORE ENGINE ---
@@ -1375,11 +1376,11 @@
                         <div class="grid grid-cols-3 gap-4 ${step < 4 ? 'opacity-30 pointer-events-none' : ''}">
                             <div class="col-span-2">
                                 <label class="block text-sm font-bold text-slate-500 mb-1">생년월일 (필수)</label>
-                                <input type="date" id="b-birth" oninput="checkSignupProgress(4)" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" value="${state.userData.birth || ''}" ${step > 4 ? 'disabled' : ''}>
+                                <input type="date" id="b-birth" oninput="checkSignupProgress(4)" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none" value="${state.userData.birth || ''}">
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-slate-500 mb-1">성별 (선택)</label>
-                                <select id="b-gender" onchange="checkSignupProgress(4)" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none bg-white" ${step > 4 ? 'disabled' : ''}>
+                                <select id="b-gender" onchange="checkSignupProgress(4)" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none bg-white">
                                     <option value="" ${state.userData.gender === "" ? "selected" : ""}>선택안함</option>
                                     <option value="male" ${state.userData.gender === "male" ? "selected" : ""}>남성</option>
                                     <option value="female" ${state.userData.gender === "female" ? "selected" : ""}>여성</option>
@@ -1687,8 +1688,8 @@
                     <div class="mb-4 p-3 bg-slate-50 rounded-lg">
                         <strong>받는 사람:</strong> king_neptune@ocean.com
                     </div>
-                    <input type="text" id="m-sub" placeholder="제목을 입력하세요 (예: 비키니 시티 보물 지도 제출)" class="w-full border-2 p-3 mb-2 rounded-xl font-bold">
-                    <textarea id="m-content" class="w-full border-2 p-3 h-32 mb-4 rounded-xl resize-none" placeholder="내용을 입력하세요"></textarea>
+                    <input type="text" id="m-sub" placeholder="제목을 입력하세요 (예: 비키니 시티 보물 지도 제출)" class="w-full border-2 p-3 mb-2 rounded-xl font-bold" value="${state.emailSubject || ''}">
+                    <textarea id="m-content" class="w-full border-2 p-3 h-32 mb-4 rounded-xl resize-none" placeholder="내용을 입력하세요">${state.emailContent || ''}</textarea>
                     <div class="p-4 bg-yellow-50 border-4 border-dashed border-yellow-200 rounded-xl mb-6 flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <i data-lucide="archive" class="text-yellow-600"></i>
@@ -1704,6 +1705,13 @@
 
         function attachZip() {
             if (!state.zipCreated) return showCustomModal("먼저 파일을 압축(ZIP)해야 해!");
+
+            // Save current input values before rendering picker
+            const sub = document.getElementById('m-sub');
+            const cont = document.getElementById('m-content');
+            if (sub) state.emailSubject = sub.value;
+            if (cont) state.emailContent = cont.value;
+
             renderFilePicker();
         }
 
@@ -1764,6 +1772,9 @@
             state.actions.send_email = true; // Unlock dialogue
             showCustomModal("메일 발송 성공! 넵튠 국왕님께서 매우 기뻐하셔!", "미션 성공!");
             updateDialogue(); // Unlock final dialogue
+
+            // Auto-advance
+            setTimeout(handleDialogue, 1500);
         }
         // --- EXTENSION QUIZ ---
         function renderExtensionQuiz() {
