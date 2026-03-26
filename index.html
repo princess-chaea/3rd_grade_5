@@ -860,6 +860,8 @@
             { phase: 4, char: "Larry the Lobster.png", name: "래리", text: "파일이 너무 많아서 무거워! '집게리아 금고 폴더'에서 파일들을 클릭(선택)한 뒤 우클릭해서 '압축하기(ZIP)'를 눌러봐! 근육처럼 꽉 압축하자구!", requires: "zip_files" },
             { phase: 4, char: "Flying Dutchman.png", name: "레이잉 더치맨", text: "으하하하! 보물을 내게 보내라! 아니면 너희 영혼을 가져가겠다!" },
             { phase: 4, char: "King Neptune.png", name: "넵튠 왕", text: "허허, 보물 지도를 보내려느냐? 우선 '비키니 포털'에서 회원가입부터 하거라. 내가 하나씩 알려주마.", requires: "signup_complete" },
+            { phase: 4, char: "SpongeBob SquarePants.png", name: "스폰지밥", text: "와아! 회원가입을 완료했어! 이제 로그인을 해서 메일 보관함을 열어보자!", requires: "login_complete" },
+            { phase: 4, char: "King Neptune.png", name: "넵튠 왕", text: "로그인도 아주 잘하는구나! 이제 내가 기다리는 보물을 메일에 첨부해서 보내보렴.", requires: "send_email" },
 
             // Phase 5: Conclusion
             { phase: 5, char: "Mrs. Puff.png", name: "퐁퐁 부인", text: "완벽해요! 당신은 이제 비키니 시티의 진정한 디지털 마스터입니다! 수료증을 받으세요!", requires: "send_email" }
@@ -1346,10 +1348,10 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-slate-500 mb-1">성별 (선택)</label>
-                                <select id="b-gender" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none bg-white" ${step > 4 ? 'disabled' : ''}>
-                                    <option value="">선택안함</option>
-                                    <option value="male">남성</option>
-                                    <option value="female">여성</option>
+                                <select id="b-gender" onchange="checkSignupProgress(4)" class="w-full border-2 p-3 rounded-2xl focus:border-indigo-400 outline-none bg-white" ${step > 4 ? 'disabled' : ''}>
+                                    <option value="" ${state.userData.gender === "" ? "selected" : ""}>선택안함</option>
+                                    <option value="male" ${state.userData.gender === "male" ? "selected" : ""}>남성</option>
+                                    <option value="female" ${state.userData.gender === "female" ? "selected" : ""}>여성</option>
                                 </select>
                             </div>
                         </div>
@@ -1370,19 +1372,31 @@
                         </div>
                     </div>
 
-                    <div class="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 mb-8 space-y-3 ${step < 6 ? 'opacity-30 pointer-events-none' : ''}">
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" id="b-terms" class="w-5 h-5 accent-indigo-600">
-                            <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">[필수] 이용약관 및 개인정보 수집 이용 동의</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" id="b-security" class="w-5 h-5 accent-indigo-600">
-                            <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">[필수] 비키니 로봇 방지 및 보안 정책 동의</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" id="b-marketing" class="w-5 h-5 accent-indigo-600">
-                            <span class="font-medium text-slate-500 group-hover:text-indigo-400 transition-colors text-sm">[선택] 이벤트 알림 및 마케팅 정보 수신 동의</span>
-                        </label>
+                    <div class="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 mb-8 ${step < 6 ? 'opacity-30 pointer-events-none' : ''}">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-black text-slate-700">약관 동의</h3>
+                            <button onclick="toggleAllTerms()" class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg hover:bg-indigo-100 transition-colors">모두 동의하기</button>
+                        </div>
+                        <div class="space-y-3 mb-4">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="b-terms" class="w-5 h-5 accent-indigo-600 term-checkbox">
+                                <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">[필수] 이용약관 동의</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="b-security" class="w-5 h-5 accent-indigo-600 term-checkbox">
+                                <span class="font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">[필수] 보인 및 로봇 방지 동의</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="b-marketing" class="w-5 h-5 accent-indigo-600 term-checkbox-opt">
+                                <span class="font-medium text-slate-500 group-hover:text-indigo-400 transition-colors text-sm">[선택] 이벤트/마케팅 수신 동의</span>
+                            </label>
+                        </div>
+                        <div class="bg-indigo-50 p-3 rounded-xl border-2 border-indigo-100 flex items-start gap-2">
+                            <i data-lucide="info" class="w-5 h-5 text-indigo-500 mt-1 shrink-0"></i>
+                            <p class="text-[11px] text-indigo-800 font-bold leading-relaxed">
+                                💡 <span class="text-indigo-600 underline">개인정보 보호 팁:</span> 선택 항목은 주로 광고나 홍보 목적이에요. '모두 동의'를 누른 뒤에도 불필요한 마케팅 정보 수신은 체크를 해제하여 나의 정보를 보호할 수 있답니다!
+                            </p>
+                        </div>
                     </div>
 
                     <button onclick="doSignup()" class="w-full bg-indigo-600 text-white py-5 rounded-3xl font-black text-2xl shadow-xl hover:bg-indigo-700 hover:-translate-y-1 transition-all ${step < 6 ? 'opacity-30 cursor-not-allowed' : ''}" ${step < 6 ? 'disabled' : ''}>
@@ -1422,9 +1436,11 @@
 
             const birth = document.getElementById('b-birth')?.value;
             const recovery = document.getElementById('b-recovery')?.value;
+            const gender = document.getElementById('b-gender')?.value;
 
             if (recovery !== undefined) state.userData.recoveryAnswer = recovery;
             if (birth !== undefined) state.userData.birth = birth;
+            if (gender !== undefined) state.userData.gender = gender;
 
             const psSafe = checkPasswordStrength(pw);
             const psMatch = pw === pwConfirm;
@@ -1459,6 +1475,11 @@
                 state.signupStep = 5;
                 renderSignup();
             }
+        }
+
+        function toggleAllTerms() {
+            const checkboxes = document.querySelectorAll('.term-checkbox, .term-checkbox-opt');
+            checkboxes.forEach(cb => cb.checked = true);
         }
 
         let generatedCode = null;
@@ -1620,7 +1641,8 @@
 
         function renderEmail() {
             const content = document.getElementById('browser-content');
-            state.attachmentAttached = false; // Reset for security lesson
+            // Ensure status persists on re-render
+            const attachText = state.attachmentAttached ? 'vault.zip 첨부됨' : '첨부파일 없음';
 
             content.innerHTML = `
                 <div class="bg-white p-6 rounded-xl shadow-md border-4 border-indigo-200">
@@ -1628,14 +1650,14 @@
                     <div class="mb-4 p-3 bg-slate-50 rounded-lg">
                         <strong>받는 사람:</strong> king_neptune@ocean.com
                     </div>
-                    <input type="text" id="m-sub" placeholder="제목: 비키니 시티 보물 지도 제출" class="w-full border-2 p-3 mb-2 rounded-xl font-bold">
-                    <textarea class="w-full border-2 p-3 h-32 mb-4 rounded-xl resize-none" placeholder="국왕님, 보물을 여기 보냅니다!"></textarea>
+                    <input type="text" id="m-sub" placeholder="제목을 입력하세요 (예: 비키니 시티 보물 지도 제출)" class="w-full border-2 p-3 mb-2 rounded-xl font-bold">
+                    <textarea id="m-content" class="w-full border-2 p-3 h-32 mb-4 rounded-xl resize-none" placeholder="내용을 입력하세요"></textarea>
                     <div class="p-4 bg-yellow-50 border-4 border-dashed border-yellow-200 rounded-xl mb-6 flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <i data-lucide="archive" class="text-yellow-600"></i>
-                            <span id="attach-status" class="font-bold text-yellow-800">${state.zipCreated ? 'vault.zip 첨부됨' : '첨부파일 없음'}</span>
+                            <span id="attach-status" class="font-bold text-yellow-800">${attachText}</span>
                         </div>
-                        <button onclick="attachZip()" class="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-lg font-black text-sm shadow-sm">파일 첨부하기</button>
+                        <button onclick="attachZip()" class="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-lg font-black text-sm shadow-sm hover:bg-yellow-500">파일 첨부하기</button>
                     </div>
                     <button onclick="sendFinalEmail()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-2xl shadow-xl hover:bg-indigo-700 transition-colors">🚀 메일 발송!</button>
                 </div>
@@ -1644,20 +1666,24 @@
         }
 
         function attachZip() {
-            if (!state.zipCreated) return showCustomModal("먼저 파일을 압축해야 해!");
+            if (!state.zipCreated) return showCustomModal("먼저 파일을 압축(ZIP)해야 해!");
             document.getElementById('attach-status').innerText = "vault.zip 첨부됨";
             state.attachmentAttached = true;
+            showCustomModal("압축파일이 성공적으로 첨부되었습니다!", "첨부 완료");
         }
 
         function sendFinalEmail() {
+            const sub = document.getElementById('m-sub').value;
+            const body = document.getElementById('m-content').value;
+
+            if (!sub || sub.trim() === "") return showCustomModal("메일 제목을 입력해야지!");
+            if (!body || body.trim() === "") return showCustomModal("메일 내용을 입력해야지!");
             if (!state.zipCreated) return showCustomModal("파일을 압축해서 준비해야지!");
             if (!state.attachmentAttached) return showCustomModal("파일을 첨부해야지!");
+
             state.actions.send_email = true; // Unlock dialogue
             showCustomModal("메일 발송 성공! 넵튠 국왕님께서 매우 기뻐하셔!", "미션 성공!");
             updateDialogue(); // Unlock final dialogue
-
-            // Auto-advance removed to allow manual browsing
-            // setTimeout(handleDialogue, 1500); 
         }
         // --- EXTENSION QUIZ ---
         function renderExtensionQuiz() {
@@ -1697,7 +1723,7 @@
                 } else {
                     state.actions.quiz_done = true;
                     showCustomModal("모든 퀴즈를 맞혔어! 역시 넌 최고야!", "미션 성공!");
-                    updateDialogue();
+                    handleDialogue();
                 }
             } else {
                 showCustomModal("틀렸어! 다시 한 번 생각해보자.", "오답입니다 ㅠㅠ");
