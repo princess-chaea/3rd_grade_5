@@ -116,8 +116,8 @@
         /* Desktop Icons */
         .desktop-icons-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, 160px);
-            grid-auto-rows: 170px;
+            grid-template-columns: repeat(auto-fill, 130px);
+            grid-auto-rows: 140px;
             gap: 20px;
             padding: 20px;
             height: 100%;
@@ -126,8 +126,8 @@
         }
 
         .desktop-icon {
-            width: 140px;
-            height: 150px;
+            width: 110px;
+            height: 120px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -143,31 +143,27 @@
         }
 
         .desktop-icon:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
         }
 
-        .desktop-icon i {
-            width: 100px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Targets both the initial i and final svg */
+        .desktop-icon [data-lucide],
+        .desktop-icon svg {
+            width: 80px !important;
+            height: 80px !important;
+            display: block;
+            margin-bottom: 5px;
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
-        }
-
-        .desktop-icon i svg {
-            width: 100% !important;
-            height: 100% !important;
-            stroke-width: 2.5px;
+            stroke-width: 2.5px !important;
         }
 
         .desktop-icon span {
-            font-size: 1.2rem;
-            font-weight: 800;
+            font-size: 0.9rem;
+            font-weight: 700;
             white-space: nowrap;
             background: rgba(0, 0, 0, 0.5);
-            padding: 4px 12px;
+            padding: 2px 10px;
             border-radius: 6px;
             text-align: center;
         }
